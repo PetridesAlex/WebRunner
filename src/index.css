@@ -1,0 +1,199 @@
+/* —— Design tokens: luxury agency —— */
+:root {
+  --bg-deep: #070708;
+  --bg-elevated: #0e0e12;
+  --bg-card: rgba(255, 255, 255, 0.028);
+  --bg-card-hover: rgba(255, 255, 255, 0.045);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-accent: rgba(201, 168, 124, 0.35);
+  --text: #f4f3f1;
+  --text-cream: #f2efe9;
+  --text-warm: #d8d0c4;
+  --text-muted: #9a9690;
+  --text-faint: #5c5954;
+  --accent: #c9a87c;
+  --accent-bright: #e4cfae;
+  --accent-deep: #a38458;
+  --accent-soft: rgba(201, 168, 124, 0.14);
+  --accent-glow: rgba(201, 168, 124, 0.22);
+  --shadow-soft: 0 24px 80px rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Outfit', system-ui, sans-serif;
+  --font-hero: 'Fraunces', 'Georgia', serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.33, 1, 0.68, 1);
+  --duration: 0.35s;
+  --duration-fast: 0.22s;
+  --max-read: 46rem;
+  /* Wider layout — use more of the viewport */
+  --layout-max: 1400px;
+  --section-pad-x: clamp(0.875rem, 2.5vw, 1.75rem);
+  --section-pad-y: clamp(2.75rem, 5vw, 4.25rem);
+  /* Navbar row height (padding + 48px logo) — mobile drawer starts below this */
+  --nav-sticky-height: calc(var(--space-4) + 48px + var(--space-4));
+}
+
+:root[data-theme='light'] {
+  --bg-deep: #f7f3eb;
+  --bg-elevated: #fffaf3;
+  --bg-card: rgba(255, 255, 255, 0.78);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --border-subtle: rgba(125, 94, 51, 0.2);
+  --border-accent: rgba(185, 145, 90, 0.45);
+  --text: #2a2319;
+  --text-cream: #3a2f22;
+  --text-warm: #4a3b2b;
+  --text-muted: #6f5f4b;
+  --text-faint: #927f66;
+  --accent: #b79260;
+  --accent-bright: #d7bc92;
+  --accent-deep: #8d6a3e;
+  --accent-soft: rgba(183, 146, 96, 0.16);
+  --accent-glow: rgba(195, 155, 102, 0.2);
+  --shadow-soft: 0 24px 80px rgba(50, 36, 15, 0.11);
+  --shadow-card: 0 10px 30px rgba(50, 36, 15, 0.1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-x: clip;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg-deep);
+  -webkit-font-smoothing: antialiased;
+}
+
+:root[data-theme='light'] .noise-overlay {
+  opacity: 0.022;
+  filter: invert(1);
+}
+
+#root {
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Noise overlay (global) — keep below UI (nav, modals, mobile menu) */
+.noise-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Scroll reveal — inline blocks */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity var(--duration) var(--ease-out),
+    transform var(--duration) var(--ease-out);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Section-level “lazy scroll” — full-width blocks ease in as you scroll */
+[data-reveal-section] {
+  opacity: 0;
+  transform: translateY(44px) scale(0.985);
+  filter: blur(8px);
+  will-change: opacity, transform, filter;
+  transition:
+    opacity 0.78s var(--ease-smooth),
+    transform 0.78s var(--ease-smooth),
+    filter 0.55s var(--ease-out);
+}
+
+[data-reveal-section].is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+@media (max-width: 768px) {
+  [data-reveal-section] {
+    filter: none;
+  }
+
+  [data-reveal-section].is-visible {
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  [data-reveal-section] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}
