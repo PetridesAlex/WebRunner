@@ -19,14 +19,14 @@ export const site = {
     width: 260,
     height: 433,
   },
-  email: 'yourdev@gmail.com',
+  email: 'info@webrunner.com',
   phone: '',
   location: 'Based in Cyprus · Available worldwide',
   responseTime: 'Usually replies within 24 hours',
   year: new Date().getFullYear(),
   socials: [
     { label: 'LinkedIn', id: 'linkedin', href: 'https://linkedin.com' },
-    { label: 'GitHub', id: 'github', href: 'https://github.com' },
+    { label: 'GitHub', id: 'github', href: 'https://github.com/PetridesAlex' },
   ],
   /** Mobile drawer — set your real profile URLs */
   messengerLinks: [
