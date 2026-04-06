@@ -21,15 +21,4 @@ export const projects = [
     live: 'https://unitedproperties.eu/',
     featured: false,
   },
-  {
-    id: 'komodromos-group',
-    title: 'Komodromos Group',
-    category: 'Corporate & holdings',
-    description:
-      'Group web presence for Komodromos: clear positioning, leadership narrative, and structured service lines with a fast, credible landing experience.',
-    image: 'https://picsum.photos/seed/komodromos-group/1200/750',
-    tech: ['React', 'Analytics'],
-    live: '#',
-    featured: false,
-  },
 ]
