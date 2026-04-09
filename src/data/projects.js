@@ -21,4 +21,15 @@ export const projects = [
     live: 'https://unitedproperties.eu/',
     featured: false,
   },
+  {
+    id: 'kaja-management',
+    title: 'Kaja Management',
+    category: 'Business & management',
+    description:
+      'Clean, authority-driven web presence for Kaja Management: structured service positioning, professional tone, and a credible brand identity built to attract serious clients.',
+    image: '/images/kajamanagement-cover.webp',
+    tech: ['React', 'CMS'],
+    live: 'https://kajamanagement.eu/',
+    featured: false,
+  },
 ]

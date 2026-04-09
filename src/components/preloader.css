@@ -1,0 +1,311 @@
+/* =============================================
+   WebRunner Preloader — Brand: deep dark + gold
+   ============================================= */
+
+/* Layout */
+.pre-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.pre-content {
+  width: 100%;
+  height: 100%;
+}
+
+.pre-content-hidden {
+  visibility: hidden;
+}
+
+.pre-fixed  { position: fixed; }
+.pre-absolute { position: absolute; }
+
+/* ---- STAIRS ---- */
+.pre-stairs {
+  inset: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.pre-stair {
+  flex: 1;
+  height: 100%;
+}
+
+.pre-stair-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    170deg,
+    #0c0a07 0%,
+    #12100c 52%,
+    #0e0c09 100%
+  );
+  border-right: 1px solid rgba(201, 168, 124, 0.06);
+}
+
+/* ---- PERCENTAGE ---- */
+.pre-pct {
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #0c0a07 0%, #12100c 52%, #0e0c09 100%);
+}
+
+.pre-pct-bl { justify-content: flex-end; align-items: flex-start; padding: 2rem; }
+.pre-pct-tl { justify-content: flex-start; align-items: flex-start; padding: 2rem; }
+
+.pre-pct-number {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: min(28vw, 220px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(
+    130deg,
+    #ffffff 0%,
+    rgba(242, 234, 220, 0.95) 35%,
+    rgba(210, 172, 128, 0.92) 68%,
+    #c9a87c 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.pre-pct-sym {
+  font-size: 0.45em;
+  opacity: 0.55;
+}
+
+.pre-bar-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(201, 168, 124, 0.12);
+}
+
+.pre-bar-top { top: 0; bottom: auto; }
+
+.pre-bar {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(201, 168, 124, 0.4), #c9a87c, #e8cfaa);
+  box-shadow: 0 0 12px rgba(201, 168, 124, 0.4);
+}
+
+/* ---- CIRCLE ---- */
+.pre-circle-wrap {
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: transparent;
+}
+
+.pre-circle-shape {
+  width: 300vmax;
+  height: 300vmax;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.pre-circle-fill {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #0c0a07 0%, #12100c 52%, #0e0c09 100%);
+}
+
+/* ---- LOGO overlay ---- */
+.pre-logo {
+  position: absolute;
+  top: clamp(1.5rem, 4vw, 2.5rem);
+  left: clamp(1.5rem, 4vw, 2.5rem);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+.pre-logo-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.pre-logo-name {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: linear-gradient(130deg, #f8f5f0 0%, rgba(228, 210, 180, 0.92) 55%, #c9a87c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- LOADING TEXT ---- */
+.pre-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: clamp(2rem, 5vw, 3.5rem);
+  pointer-events: none;
+}
+
+.pre-text-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 0.6rem;
+}
+
+.pre-text-word {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.35rem, 2.8vw, 2rem);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  will-change: opacity, filter;
+  background: linear-gradient(
+    130deg,
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(228, 205, 168, 0.82) 55%,
+    rgba(201, 168, 124, 0.72) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Ambient glow accent at center */
+.pre-stairs::after,
+.pre-pct::after,
+.pre-circle-wrap::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60vw;
+  height: 60vw;
+  max-width: 700px;
+  max-height: 700px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(201, 168, 124, 0.08) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- CENTER brand mark ---- */
+.pre-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Outer ambient glow */
+.pre-center__glow-ring {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(201, 168, 124, 0.16) 0%,
+    rgba(201, 168, 124, 0.04) 52%,
+    transparent 72%
+  );
+}
+
+/* SVG ring wrapper */
+.pre-center__ring-wrap {
+  position: absolute;
+  width: 148px;
+  height: 148px;
+}
+
+/* Tick marks */
+.pre-center__ticks {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.pre-center__tick {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 3px;
+  margin: -1.5px;
+  border-radius: 50%;
+  background: rgba(201, 168, 124, 0.22);
+  transform:
+    rotate(var(--deg))
+    translateY(-97px);
+}
+
+.pre-center__tick:nth-child(3n) {
+  width: 4px;
+  height: 4px;
+  background: rgba(201, 168, 124, 0.42);
+}
+
+/* Inner stacked content */
+.pre-center__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.28rem;
+}
+
+.pre-center__icon {
+  width: 42px;
+  height: 42px;
+  margin-bottom: 0.1rem;
+  filter: drop-shadow(0 0 18px rgba(201, 168, 124, 0.45));
+}
+
+.pre-center__brand {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: linear-gradient(130deg, #ffffff 0%, rgba(232, 212, 182, 0.94) 48%, #c9a87c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.pre-center__tagline {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.82rem;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: rgba(201, 168, 124, 0.58);
+  text-transform: uppercase;
+}

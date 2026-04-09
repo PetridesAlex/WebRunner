@@ -30,8 +30,8 @@ export const site = {
   ],
   /** Mobile drawer — set your real profile URLs */
   messengerLinks: [
-    { id: 'telegram', label: 'Telegram', href: 'https://t.me/webrunner' },
-    { id: 'whatsapp', label: 'WhatsApp', href: 'https://wa.me/3000000000000' },
+    { id: 'telegram', label: 'Telegram', href: 'https://t.me/+35797866884' },
+    { id: 'whatsapp', label: 'WhatsApp', href: 'https://wa.me/35797866884' },
     { id: 'instagram', label: 'Instagram', href: 'https://instagram.com/webrunner' },
   ],
 }

@@ -1,0 +1,179 @@
+/* =============================================
+   ProjectTicker — scrolling project cards
+   ============================================= */
+
+.ticker-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: var(--space-2) 0;
+  cursor: default;
+}
+
+.ticker-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  will-change: transform;
+}
+
+/* ---- Card ---- */
+.ticker-card {
+  position: relative;
+  flex-shrink: 0;
+  width: 340px;
+  height: 220px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+  border: 1px solid rgba(201, 168, 124, 0.18);
+  background: rgba(14, 12, 10, 0.92);
+  transition:
+    border-color 0.32s var(--ease-out),
+    transform 0.32s var(--ease-out),
+    box-shadow 0.32s var(--ease-out);
+}
+
+.ticker-card:hover {
+  border-color: rgba(201, 168, 124, 0.52);
+  transform: translateY(-6px) scale(1.015);
+  box-shadow:
+    0 22px 52px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(201, 168, 124, 0.12);
+}
+
+/* Media */
+.ticker-card__media {
+  position: absolute;
+  inset: 0;
+}
+
+.ticker-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.ticker-card:hover .ticker-card__media img {
+  transform: scale(1.07);
+}
+
+.ticker-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 6, 4, 0.08) 0%,
+    rgba(8, 6, 4, 0.62) 55%,
+    rgba(6, 4, 2, 0.92) 100%
+  );
+  transition: opacity 0.3s var(--ease-out);
+}
+
+.ticker-card:hover .ticker-card__overlay {
+  opacity: 0.88;
+}
+
+/* Body */
+.ticker-card__body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.ticker-card__cat {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 124, 0.85);
+}
+
+.ticker-card__title {
+  font-family: var(--font-hero);
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  background: linear-gradient(130deg, #fff 0%, rgba(240, 230, 214, 0.92) 55%, rgba(210, 175, 128, 0.88) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ticker-card__arrow {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  font-size: 1.1rem;
+  color: rgba(201, 168, 124, 0.55);
+  transition: color 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+}
+
+.ticker-card:hover .ticker-card__arrow {
+  color: var(--accent-bright);
+  transform: translate(2px, -2px);
+}
+
+/* Fade masks */
+.ticker-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ticker-fade--left {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg-deep) 0%, transparent 100%);
+}
+
+.ticker-fade--right {
+  right: 0;
+  background: linear-gradient(270deg, var(--bg-deep) 0%, transparent 100%);
+}
+
+/* Light mode */
+:root[data-theme='light'] .ticker-card {
+  border-color: rgba(157, 122, 76, 0.2);
+  background: rgba(248, 240, 226, 0.94);
+}
+
+:root[data-theme='light'] .ticker-card:hover {
+  border-color: rgba(157, 122, 76, 0.48);
+}
+
+:root[data-theme='light'] .ticker-card__overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(30, 20, 10, 0.06) 0%,
+    rgba(20, 12, 4, 0.54) 60%,
+    rgba(12, 8, 2, 0.88) 100%
+  );
+}
+
+:root[data-theme='light'] .ticker-fade--left {
+  background: linear-gradient(90deg, var(--bg-deep) 0%, transparent 100%);
+}
+
+:root[data-theme='light'] .ticker-fade--right {
+  background: linear-gradient(270deg, var(--bg-deep) 0%, transparent 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-card {
+    transition: none;
+  }
+  .ticker-card:hover {
+    transform: none;
+  }
+}

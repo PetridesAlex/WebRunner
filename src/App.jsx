@@ -12,12 +12,15 @@ import { WebsiteSolutions } from './components/sections/WebsiteSolutions'
 import { Portfolio } from './components/sections/Portfolio'
 import { Testimonials } from './components/sections/Testimonials'
 import { Contact } from './components/sections/Contact'
+import Preloader from './components/Preloader'
+import { TopTicker } from './components/layout/TopTicker'
 
 const THEME_STORAGE_KEY = 'webrunner-theme'
 
 export default function App() {
   const activeId = useActiveSection()
   const [theme, setTheme] = useState('dark')
+  const [loading, setLoading] = useState(true)
   useReveal()
 
   useEffect(() => {
@@ -32,11 +35,26 @@ export default function App() {
     window.localStorage.setItem(THEME_STORAGE_KEY, theme)
   }, [theme])
 
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2400)
+    return () => clearTimeout(timer)
+  }, [])
+
   const toggleTheme = () => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))
 
   return (
-    <>
+    <Preloader
+      loading={loading}
+      variant="stairs"
+      position="fixed"
+      duration={2200}
+      loadingText="Building your experience"
+      stairCount={10}
+      stairsRevealFrom="left"
+      stairsRevealDirection="up"
+    >
       <div className="noise-overlay" aria-hidden />
+      <TopTicker />
       <Navbar activeId={activeId} theme={theme} onToggleTheme={toggleTheme} />
       <main>
         <Hero />
@@ -50,6 +68,6 @@ export default function App() {
       </main>
       <Footer />
       <BackToTop />
-    </>
+    </Preloader>
   )
 }
