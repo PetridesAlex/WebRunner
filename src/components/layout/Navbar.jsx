@@ -94,7 +94,10 @@ export function Navbar({ activeId, theme, onToggleTheme }) {
             height={48}
             decoding="async"
           />
-          <span className="nav__brand-wordmark">{site.brand}</span>
+          <span className="nav__brand-wordmark">
+            <span className="nav__brand-name">{site.brand}</span>
+            <span className="nav__brand-badge">Agency</span>
+          </span>
         </a>
 
         <button

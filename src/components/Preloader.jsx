@@ -145,7 +145,10 @@ const Preloader = ({
         transition={{ duration: 0.6, delay: 0.2, ease: [0.65, 0, 0.35, 1] }}
       >
         <img src="/webrunner-icon.svg" alt="" width={100} height={100} className="pre-center__icon" />
-        <span className="pre-center__brand">WebRunner</span>
+        <div className="pre-center__wordmark">
+          <span className="pre-center__brand">WebRunner</span>
+          <span className="nav__brand-badge">Agency</span>
+        </div>
         <span className="pre-center__tagline">Digital studio</span>
       </motion.div>
     </div>
@@ -161,7 +164,10 @@ const Preloader = ({
         className="pre-logo-inner"
       >
         <img src="/webrunner-icon.svg" alt="" width={44} height={44} />
-        <span className="pre-logo-name">WebRunner</span>
+        <div className="pre-logo-wordmark">
+          <span className="pre-logo-name">WebRunner</span>
+          <span className="nav__brand-badge">Agency</span>
+        </div>
       </motion.div>
     </div>
   )

@@ -141,6 +141,14 @@
   gap: 0.65rem;
 }
 
+.pre-logo-wordmark {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.08rem;
+  line-height: 1;
+}
+
 .pre-logo-name {
   font-family: 'Outfit', system-ui, sans-serif;
   font-size: 1.45rem;
@@ -278,6 +286,22 @@
   flex-direction: column;
   align-items: center;
   gap: 0.28rem;
+}
+
+.pre-center__wordmark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.14rem;
+  line-height: 1;
+}
+
+.pre-center__wordmark .nav__brand-badge {
+  align-self: center;
+}
+
+.pre-logo-wordmark .nav__brand-badge {
+  align-self: flex-start;
 }
 
 .pre-center__icon {

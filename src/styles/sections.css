@@ -168,10 +168,6 @@
   box-shadow: 0 8px 22px rgba(116, 84, 44, 0.08);
 }
 
-:root[data-theme='light'] .nav__brand-wordmark {
-  color: #5f4326;
-}
-
 .nav {
   max-width: var(--layout-max);
   margin: 0 auto;
@@ -206,15 +202,87 @@
 }
 
 .nav__brand-wordmark {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.12rem;
+  line-height: 1;
+  min-height: 2.5rem;
+}
+
+.nav__brand-name {
   font-family: var(--font-sans);
   font-size: clamp(1.05rem, 2vw, 1.25rem);
   font-weight: 700;
   letter-spacing: -0.03em;
-  color: var(--text-cream);
   background: linear-gradient(130deg, #ffffff 0%, rgba(232, 210, 180, 0.92) 55%, #c9a87c 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  line-height: 1.05;
+}
+
+:root[data-theme='light'] .nav__brand-name {
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  color: #5f4326;
+}
+
+.nav__brand-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 0.3rem 0.72rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: clamp(0.58rem, 1.15vw, 0.68rem);
+  font-weight: 800;
+  font-style: normal;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  vertical-align: top;
+  position: relative;
+  top: 0;
+  isolation: isolate;
+  color: #e2eaf3;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.42),
+    0 -1px 0 rgba(0, 0, 0, 0.32),
+    0 0 14px rgba(200, 215, 235, 0.18);
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.06) 40%,
+    rgba(6, 10, 18, 0.38) 100%
+  );
+  -webkit-backdrop-filter: blur(12px) saturate(125%);
+  backdrop-filter: blur(12px) saturate(125%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+    0 6px 22px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme='light'] .nav__brand-badge {
+  color: #4a5562;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9),
+    0 -1px 0 rgba(0, 0, 0, 0.05);
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.78) 0%,
+    rgba(255, 255, 255, 0.42) 42%,
+    rgba(210, 218, 232, 0.55) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(120, 130, 150, 0.08),
+    0 4px 18px rgba(70, 90, 120, 0.1);
 }
 
 .nav__links {
