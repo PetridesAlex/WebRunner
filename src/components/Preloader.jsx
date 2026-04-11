@@ -144,8 +144,8 @@ const Preloader = ({
         exit={{ opacity: 0, y: -8 }}
         transition={{ duration: 0.6, delay: 0.2, ease: [0.65, 0, 0.35, 1] }}
       >
-        <img src="/webrunner-icon.svg" alt="" width={38} height={38} className="pre-center__icon" />
-        <span className="pre-center__brand">WEBRUNNER</span>
+        <img src="/webrunner-icon.svg" alt="" width={100} height={100} className="pre-center__icon" />
+        <span className="pre-center__brand">WebRunner</span>
         <span className="pre-center__tagline">Digital studio</span>
       </motion.div>
     </div>
@@ -160,8 +160,8 @@ const Preloader = ({
         transition={{ duration: 0.45, ease: [0.65, 0, 0.35, 1] }}
         className="pre-logo-inner"
       >
-        <img src="/webrunner-icon.svg" alt="WebRunner" width={36} height={36} />
-        <span className="pre-logo-name">WEBRUNNER</span>
+        <img src="/webrunner-icon.svg" alt="" width={44} height={44} />
+        <span className="pre-logo-name">WebRunner</span>
       </motion.div>
     </div>
   )
@@ -191,7 +191,6 @@ const Preloader = ({
             {!bgColor && <div className="pre-stair-fill" />}
           </motion.div>
         ))}
-        {renderLogo()}
         {renderCenter()}
         {renderLoadingText()}
       </div>

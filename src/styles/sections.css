@@ -197,12 +197,24 @@
   object-fit: contain;
 }
 
+.nav__brand-logo {
+  display: block;
+  height: 80px;
+  width: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
 .nav__brand-wordmark {
   font-family: var(--font-sans);
   font-size: clamp(1.05rem, 2vw, 1.25rem);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.03em;
-  color: var(--text);
+  color: var(--text-cream);
+  background: linear-gradient(130deg, #ffffff 0%, rgba(232, 210, 180, 0.92) 55%, #c9a87c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .nav__links {
