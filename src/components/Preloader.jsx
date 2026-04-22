@@ -1,7 +1,33 @@
 import { useEffect, useState, useRef } from 'react'
 import { flushSync } from 'react-dom'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion } from 'motion/react'
 import './preloader.css'
+
+/** Per-column exit: delay increases along reveal axis; all use the same move duration. */
+const STAIR_STAGGER_S = 0.055
+const STAIR_MOVE_DURATION_S = 0.5
+/**
+ * After the last column’s motion, only a few ms before unmount — long “settle” waits
+ * with columns already gone read as a blank / empty screen.
+ */
+const STAIR_EXIT_SETTLE_MS = 32
+const STAIR_EASE = [0.3, 0.85, 0.22, 1]
+
+function maxStairExitMs(stairCount) {
+  const lastIndex = Math.max(0, stairCount - 1)
+  const lastDelayS = lastIndex * STAIR_STAGGER_S
+  return Math.ceil((lastDelayS + STAIR_MOVE_DURATION_S) * 1000) + STAIR_EXIT_SETTLE_MS
+}
+
+/** Time until preloader unmounts after loading finishes (must cover last stagger + move duration + settle). */
+function getExitDurationMs(variant, stairCount) {
+  if (variant === 'stairs') {
+    return maxStairExitMs(stairCount)
+  }
+  if (variant === 'percentage') return 480
+  if (variant === 'circle') return 820
+  return 400
+}
 
 const Preloader = ({
   loading,
@@ -18,6 +44,8 @@ const Preloader = ({
   textClassName = '',
   children,
   stairCount = 10,
+  /** 'covered' = panels start full-screen, then slide off when ready. 'fromBottom' = rise into view first, then exit. */
+  stairsEntrance = 'covered',
   stairsRevealFrom = 'left',
   stairsRevealDirection = 'up',
   percentagePosition = 'center',
@@ -50,7 +78,6 @@ const Preloader = ({
 
   useEffect(() => {
     let timeoutId
-    let completeTimeoutId
 
     if (loading) {
       const startTime = Date.now()
@@ -80,30 +107,40 @@ const Preloader = ({
         isActive = false
         if (rafRef.current) cancelAnimationFrame(rafRef.current)
       }
-    } else if (showPreloader) {
+    } else if (!loading && showPreloader) {
       hasStartedRef.current = false
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
 
-      const immediateId = setTimeout(() => {
+      flushSync(() => {
         setProgress(100)
         if (!textHiddenRef.current) {
           textHiddenRef.current = true
           setHideText(true)
         }
-      }, 0)
+      })
 
+      const exitMs = getExitDurationMs(variant, stairCount)
       timeoutId = setTimeout(() => {
         setShowPreloader(false)
-        completeTimeoutId = setTimeout(() => onComplete?.(), 800)
-      }, 300)
+        onLoadingComplete?.()
+        queueMicrotask(() => onComplete?.())
+      }, exitMs)
 
       return () => {
-        clearTimeout(immediateId)
         clearTimeout(timeoutId)
-        clearTimeout(completeTimeoutId)
       }
     }
-  }, [loading, duration, onComplete, onLoadingStart, showPreloader, textFadeThreshold])
+  }, [
+    loading,
+    duration,
+    onComplete,
+    onLoadingStart,
+    onLoadingComplete,
+    showPreloader,
+    textFadeThreshold,
+    variant,
+    stairCount,
+  ])
 
   const renderLoadingText = () => {
     const words = loadingText.split(' ')
@@ -134,22 +171,41 @@ const Preloader = ({
     )
   }
 
+  const stairsExitPhase = variant === 'stairs' && showPreloader && !loading
+
   const renderCenter = () => (
     <div className="pre-center" style={{ zIndex: zIndex + 2 }}>
-      {/* Inner content */}
       <motion.div
         className="pre-center__inner"
         initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.6, delay: 0.2, ease: [0.65, 0, 0.35, 1] }}
+        animate={
+          stairsExitPhase
+            ? { opacity: 0, y: -10, scale: 0.98 }
+            : { opacity: 1, y: 0, scale: 1 }
+        }
+        transition={{
+          duration: stairsExitPhase ? 0.38 : 0.6,
+          delay: stairsExitPhase ? 0 : 0.2,
+          ease: [0.65, 0, 0.35, 1],
+        }}
       >
-        <img src="/webrunner-icon.svg" alt="" width={100} height={100} className="pre-center__icon" />
+        <div className="pre-center__mark">
+          <div className="pre-center__icon-halo" aria-hidden />
+          <div className="pre-center__icon-frame">
+            <img
+              src="/webrunner-icon.svg"
+              alt=""
+              width={112}
+              height={112}
+              className="pre-center__icon"
+            />
+          </div>
+        </div>
         <div className="pre-center__wordmark">
           <span className="pre-center__brand">WebRunner</span>
-          <span className="nav__brand-badge">Agency</span>
+          <span className="nav__brand-badge pre-center__badge">Agency</span>
         </div>
-        <span className="pre-center__tagline">Digital studio</span>
+        <span className="pre-center__tagline">Design-led digital studio</span>
       </motion.div>
     </div>
   )
@@ -163,7 +219,9 @@ const Preloader = ({
         transition={{ duration: 0.45, ease: [0.65, 0, 0.35, 1] }}
         className="pre-logo-inner"
       >
-        <img src="/webrunner-icon.svg" alt="" width={44} height={44} />
+        <div className="pre-logo-icon-frame">
+          <img src="/webrunner-icon.svg" alt="" width={40} height={40} className="pre-logo-icon" />
+        </div>
         <div className="pre-logo-wordmark">
           <span className="pre-logo-name">WebRunner</span>
           <span className="nav__brand-badge">Agency</span>
@@ -175,22 +233,30 @@ const Preloader = ({
   const renderStairs = () => {
     const stairs = Array.from({ length: stairCount })
     const getDelay = (i) => {
-      if (stairsRevealFrom === 'left') return i * 0.055
-      if (stairsRevealFrom === 'right') return (stairCount - 1 - i) * 0.055
+      if (stairsRevealFrom === 'left') return i * STAIR_STAGGER_S
+      if (stairsRevealFrom === 'right') return (stairCount - 1 - i) * STAIR_STAGGER_S
       const mid = (stairCount - 1) / 2
-      return Math.abs(i - mid) * 0.055
+      return Math.abs(i - mid) * STAIR_STAGGER_S
     }
     const exitY = stairsRevealDirection === 'up' ? '-100%' : '100%'
+    const enterY = stairsRevealDirection === 'up' ? '100%' : '-100%'
+    const stairsExiting = showPreloader && !loading
+    const startCovered = stairsEntrance === 'covered'
+    const initialY = startCovered ? '0%' : enterY
 
     return (
       <div className={`pre-stairs pre-${position}`} style={{ zIndex }} role="status" aria-label="Loading WebRunner">
         {stairs.map((_, i) => (
           <motion.div
             key={i}
-            initial={{ y: '0%' }}
-            animate={{ y: '0%' }}
-            exit={{ y: exitY }}
-            transition={{ duration: 0.55, delay: getDelay(i), ease: [0.65, 0, 0.35, 1] }}
+            initial={{ y: initialY }}
+            animate={{ y: stairsExiting ? exitY : '0%' }}
+            transition={{
+              type: 'tween',
+              duration: STAIR_MOVE_DURATION_S,
+              delay: getDelay(i),
+              ease: STAIR_EASE,
+            }}
             className="pre-stair"
             style={{ backgroundColor: bgColor || undefined }}
           >
@@ -260,15 +326,13 @@ const Preloader = ({
 
   return (
     <div className={`pre-wrapper ${className}`}>
-      <AnimatePresence onExitComplete={onLoadingComplete}>
-        {showPreloader && (
-          <div key="preloader">
-            {variant === 'stairs' && renderStairs()}
-            {variant === 'percentage' && renderPercentage()}
-            {variant === 'circle' && renderCircle()}
-          </div>
-        )}
-      </AnimatePresence>
+      {showPreloader ? (
+        <div key="preloader">
+          {variant === 'stairs' && renderStairs()}
+          {variant === 'percentage' && renderPercentage()}
+          {variant === 'circle' && renderCircle()}
+        </div>
+      ) : null}
       <div className={showPreloader ? 'pre-content pre-content-hidden' : 'pre-content'}>
         {children}
       </div>

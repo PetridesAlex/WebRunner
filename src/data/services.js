@@ -21,21 +21,21 @@ export const services = [
     icon: 'grid',
   },
   {
-    id: '05',
+    id: '04',
     title: 'Real Estate Websites',
     description:
       'Premium property websites with refined layouts, powerful filtering, and strong visual presentation to showcase listings and drive inquiries.',
     icon: 'building',
   },
   {
-    id: '06',
+    id: '05',
     title: 'Redesign & Modernization',
     description:
       'Transform outdated websites into modern, high-performing digital experiences with improved design, structure, and usability.',
     icon: 'layers',
   },
   {
-    id: '07',
+    id: '06',
     title: 'eCommerce Stores',
     description:
       'High-performance online stores built to scale - combining seamless shopping experiences, modern design, and conversion-driven structure.',

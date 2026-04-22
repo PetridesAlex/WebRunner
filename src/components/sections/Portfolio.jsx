@@ -36,9 +36,9 @@ export function Portfolio() {
               <div className="project-card__header-band">
                 <span className="project-card__header-tag">
                   <span className="project-card__header-dot" aria-hidden />
-                  Featured Project
+                  {p.headerTag}
                 </span>
-                <span className="project-card__header-year">2024</span>
+                <span className="project-card__header-year">{p.year}</span>
               </div>
               <p className="project-card__category">{p.category}</p>
               <h3 className="project-card__title">{p.title}</h3>
@@ -69,6 +69,13 @@ export function Portfolio() {
                 <img src={p.image} alt="" width={800} height={500} loading="lazy" />
               </a>
               <div className="project-card__body">
+                <div className="project-card__header-band">
+                  <span className="project-card__header-tag">
+                    <span className="project-card__header-dot" aria-hidden />
+                    {p.headerTag}
+                  </span>
+                  <span className="project-card__header-year">{p.year}</span>
+                </div>
                 <p className="project-card__category">{p.category}</p>
                 <h3 className="project-card__title">{p.title}</h3>
                 <p className="project-card__desc">{p.description}</p>

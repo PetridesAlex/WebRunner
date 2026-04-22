@@ -9,6 +9,8 @@ export const projects = [
     tech: ['React', 'CMS'],
     live: 'https://www.honeywelltravel.com.cy/',
     featured: true,
+    headerTag: 'Featured project',
+    year: '2024',
   },
   {
     id: 'united-properties',
@@ -20,6 +22,8 @@ export const projects = [
     tech: ['React', 'SEO'],
     live: 'https://unitedproperties.eu/',
     featured: false,
+    headerTag: 'Publish',
+    year: '2024',
   },
   {
     id: 'kaja-management',
@@ -31,5 +35,7 @@ export const projects = [
     tech: ['React', 'CMS'],
     live: 'https://kajamanagement.eu/',
     featured: false,
+    headerTag: 'Publish',
+    year: '2024',
   },
 ]

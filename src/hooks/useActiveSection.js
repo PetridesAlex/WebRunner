@@ -7,8 +7,8 @@ const SECTION_IDS = [
   'services',
   'solutions',
   'portfolio',
+  'faq',
   'journey',
-  'testimonials',
   'contact',
 ]
 

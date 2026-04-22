@@ -4,7 +4,7 @@ import { ServiceIcon } from './ServiceIcon'
 
 export function Services() {
   return (
-    <section id="services" className="services section" aria-labelledby="services-heading" data-reveal-section>
+    <section id="services" className="services section section--services" aria-labelledby="services-heading" data-reveal-section>
       <div className="section__container">
         <SectionHeader
           titleId="services-heading"

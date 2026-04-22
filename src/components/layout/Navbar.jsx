@@ -33,33 +33,12 @@ const navLinks = [
   { id: 'services', label: 'Services' },
   { id: 'solutions', label: 'Packages' },
   { id: 'portfolio', label: 'Work' },
-  { id: 'testimonials', label: 'Clients' },
+  { id: 'faq', label: 'FAQ' },
   { id: 'contact', label: 'Contact' },
 ]
 
-function ThemeIcon({ theme }) {
-  if (theme === 'light') {
-    return (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-        <path d="M12 3a9 9 0 100 18A9 9 0 0012 3zm0 2a7 7 0 010 14V5z" />
-      </svg>
-    )
-  }
-
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <circle cx="12" cy="12" r="4.5" />
-      <path
-        fillRule="evenodd"
-        d="M12 0a1 1 0 011 1v2a1 1 0 01-2 0V1a1 1 0 011-1zm0 20a1 1 0 011 1v2a1 1 0 01-2 0v-2a1 1 0 011-1zM0 12a1 1 0 011-1h2a1 1 0 010 2H1a1 1 0 01-1-1zm20 0a1 1 0 011-1h2a1 1 0 010 2h-2a1 1 0 01-1-1zM3.515 3.515a1 1 0 011.414 0l1.414 1.414a1 1 0 01-1.414 1.414L3.515 4.93a1 1 0 010-1.415zm14.143 14.143a1 1 0 011.414 0l1.414 1.414a1 1 0 01-1.414 1.414l-1.414-1.414a1 1 0 010-1.414zM3.515 20.485a1 1 0 010-1.414l1.414-1.414a1 1 0 011.414 1.414L4.93 20.485a1 1 0 01-1.415 0zM17.657 6.343a1 1 0 010-1.414l1.414-1.414a1 1 0 011.414 1.414l-1.414 1.414a1 1 0 01-1.414 0z"
-      />
-    </svg>
-  )
-}
-
-export function Navbar({ activeId, theme, onToggleTheme }) {
+export function Navbar({ activeId }) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const isLight = theme === 'light'
 
   const closeMenu = () => setMenuOpen(false)
 
@@ -133,19 +112,6 @@ export function Navbar({ activeId, theme, onToggleTheme }) {
               </a>
             </li>
           ))}
-          <li className="nav__links-theme">
-            <button
-              type="button"
-              className="nav__theme-toggle nav__theme-toggle--drawer"
-              onClick={onToggleTheme}
-              aria-label={isLight ? 'Switch to dark theme' : 'Switch to light theme'}
-            >
-              <span className="nav__theme-icon">
-                <ThemeIcon theme={theme} />
-              </span>
-              <span className="nav__theme-label">{isLight ? 'Light mode' : 'Dark mode'}</span>
-            </button>
-          </li>
           <li className="nav__links-cta">
             <Button href="#contact" className="btn--sm nav__drawer-cta" onClick={closeMenu}>
               Start a project
@@ -171,14 +137,6 @@ export function Navbar({ activeId, theme, onToggleTheme }) {
           </li>
         </ul>
 
-        <button
-          type="button"
-          className="nav__theme-toggle"
-          onClick={onToggleTheme}
-          aria-label={isLight ? 'Switch to dark theme' : 'Switch to light theme'}
-        >
-          <ThemeIcon theme={theme} />
-        </button>
         <Button href="#contact" className="nav__cta btn--sm">
           Start a project
         </Button>

@@ -1,27 +1,18 @@
 import { useEffect, useState } from 'react'
-import { useActiveSection } from './hooks/useActiveSection'
-import { useReveal } from './hooks/useReveal'
-import { Navbar } from './components/layout/Navbar'
-import { Footer } from './components/layout/Footer'
-import { BackToTop } from './components/layout/BackToTop'
-import { Hero } from './components/sections/Hero'
-import { About } from './components/sections/About'
-import { Skills } from './components/sections/Skills'
-import { Services } from './components/sections/Services'
-import { WebsiteSolutions } from './components/sections/WebsiteSolutions'
-import { Portfolio } from './components/sections/Portfolio'
-import { Testimonials } from './components/sections/Testimonials'
-import { Contact } from './components/sections/Contact'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Preloader from './components/Preloader'
-import { TopTicker } from './components/layout/TopTicker'
+import { HomePage } from './pages/HomePage'
+import { CookiesPage } from './pages/CookiesPage'
+import { CookieBanner } from './components/CookieBanner'
 
 const THEME_STORAGE_KEY = 'webrunner-theme'
+/** Time on the preloader before stair exit runs (keeps the intro + load text readable, then exits fast). */
+const PRELOADER_HOLD_MS = 2200
 
-export default function App() {
-  const activeId = useActiveSection()
+function AppRoutes() {
   const [theme, setTheme] = useState('dark')
   const [loading, setLoading] = useState(true)
-  useReveal()
+  const location = useLocation()
 
   useEffect(() => {
     const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY)
@@ -36,38 +27,41 @@ export default function App() {
   }, [theme])
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2400)
+    const timer = setTimeout(() => setLoading(false), PRELOADER_HOLD_MS)
     return () => clearTimeout(timer)
   }, [])
 
-  const toggleTheme = () => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))
+  useEffect(() => {
+    if (!location.hash) {
+      window.scrollTo(0, 0)
+    }
+  }, [location.pathname])
 
   return (
     <Preloader
       loading={loading}
       variant="stairs"
       position="fixed"
-      duration={2200}
-      loadingText="Building your experience"
+      duration={PRELOADER_HOLD_MS}
+      loadingText="Crafting your first impression"
       stairCount={10}
+      stairsEntrance="fromBottom"
       stairsRevealFrom="left"
       stairsRevealDirection="up"
     >
-      <div className="noise-overlay" aria-hidden />
-      <TopTicker />
-      <Navbar activeId={activeId} theme={theme} onToggleTheme={toggleTheme} />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Services />
-        <WebsiteSolutions />
-        <Portfolio />
-        <Testimonials />
-        <Contact />
-      </main>
-      <Footer />
-      <BackToTop />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/cookies" element={<CookiesPage />} />
+      </Routes>
+      <CookieBanner visibleAfterPreload={!loading} />
     </Preloader>
+  )
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   )
 }

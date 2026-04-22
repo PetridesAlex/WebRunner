@@ -14,11 +14,13 @@ const socialIcons = {
 }
 
 const quick = [
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Packages', href: '#solutions' },
-  { label: 'Work', href: '#portfolio' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', href: '/#about' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Packages', href: '/#solutions' },
+  { label: 'Work', href: '/#portfolio' },
+  { label: 'FAQ', href: '/#faq' },
+  { label: 'Contact', href: '/#contact' },
+  { label: 'Cookies', href: '/cookies' },
 ]
 
 export function Footer() {

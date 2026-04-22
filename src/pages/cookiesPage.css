@@ -1,0 +1,167 @@
+.cookies-page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-deep);
+  color: var(--text);
+}
+
+.cookies-page__skip {
+  position: absolute;
+  left: -9999px;
+  z-index: 100000;
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-elevated);
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+}
+
+.cookies-page__skip:focus {
+  left: var(--section-pad-x);
+  top: var(--space-4);
+}
+
+.cookies-page__header {
+  max-width: var(--layout-max);
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-5) var(--section-pad-x);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cookies-page__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.cookies-page__brand:hover,
+.cookies-page__brand:focus-visible {
+  opacity: 0.85;
+}
+
+.cookies-page__brand-icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+.cookies-page__brand-name {
+  font-size: 1.125rem;
+}
+
+.cookies-page__back {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out);
+}
+
+.cookies-page__back:hover,
+.cookies-page__back:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.cookies-page__main {
+  flex: 1 0 auto;
+  width: 100%;
+  padding: var(--space-12) var(--section-pad-x) var(--space-20);
+}
+
+.cookies-page__article {
+  max-width: var(--max-read);
+  margin: 0 auto;
+}
+
+.cookies-page__h1 {
+  font-family: var(--font-hero);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text-cream);
+  margin: 0 0 var(--space-2);
+}
+
+.cookies-page__meta {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--text-faint);
+  margin: 0 0 var(--space-8);
+}
+
+.cookies-page__lead {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--text-warm);
+  margin: 0 0 var(--space-8);
+}
+
+.cookies-page__h2 {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: var(--space-8) 0 var(--space-3);
+}
+
+.cookies-page__article p {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0 0 var(--space-4);
+}
+
+.cookies-page__list {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0 0 var(--space-4);
+  padding-left: 1.25rem;
+}
+
+.cookies-page__list li {
+  margin-bottom: var(--space-3);
+}
+
+.cookies-page__list code {
+  font-size: 0.875em;
+  padding: 0.1em 0.35em;
+  background: var(--bg-card);
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+}
+
+.cookies-page__a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-accent);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.cookies-page__a:hover,
+.cookies-page__a:focus-visible {
+  color: var(--accent-bright);
+}
+
+.cookies-page .footer {
+  margin-top: auto;
+}

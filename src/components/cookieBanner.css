@@ -1,0 +1,100 @@
+.cookie-banner {
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--space-4) var(--section-pad-x) calc(var(--space-4) + env(safe-area-inset-bottom, 0));
+  pointer-events: none;
+}
+
+.cookie-banner__inner {
+  max-width: var(--layout-max);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-6);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  pointer-events: auto;
+}
+
+.cookie-banner__text {
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+
+.cookie-banner__title {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  margin: 0 0 var(--space-2);
+}
+
+.cookie-banner__desc {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 42rem;
+}
+
+.cookie-banner__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-3);
+  flex: 0 0 auto;
+}
+
+.cookie-banner__link {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out);
+}
+
+.cookie-banner__link:hover,
+.cookie-banner__link:focus-visible {
+  color: var(--accent-bright);
+  border-bottom-color: var(--accent-bright);
+}
+
+.cookie-banner__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: flex-end;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .cookie-banner__actions {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .cookie-banner__link {
+    align-self: flex-start;
+  }
+
+  .cookie-banner__buttons {
+    width: 100%;
+  }
+
+  .cookie-banner__buttons .btn {
+    flex: 1;
+    min-width: 0;
+  }
+}

@@ -27,8 +27,9 @@
   overflow: hidden;
   text-decoration: none;
   display: block;
-  border: 1px solid rgba(201, 168, 124, 0.18);
-  background: rgba(14, 12, 10, 0.92);
+  border: 1px solid rgba(255, 106, 0, 0.22);
+  background: linear-gradient(165deg, #121110 0%, #080706 100%);
+  box-shadow: 0 0 0 1px rgba(255, 106, 0, 0.05);
   transition:
     border-color 0.32s var(--ease-out),
     transform 0.32s var(--ease-out),
@@ -36,11 +37,12 @@
 }
 
 .ticker-card:hover {
-  border-color: rgba(201, 168, 124, 0.52);
+  border-color: rgba(255, 140, 80, 0.48);
   transform: translateY(-6px) scale(1.015);
   box-shadow:
     0 22px 52px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(201, 168, 124, 0.12);
+    0 0 0 1px rgba(255, 106, 0, 0.12),
+    0 0 40px rgba(255, 106, 0, 0.08);
 }
 
 /* Media */
@@ -93,7 +95,7 @@
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(201, 168, 124, 0.85);
+  color: rgba(255, 200, 170, 0.88);
 }
 
 .ticker-card__title {
@@ -102,10 +104,17 @@
   font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1.15;
-  background: linear-gradient(130deg, #fff 0%, rgba(240, 230, 214, 0.92) 55%, rgba(210, 175, 128, 0.88) 100%);
+  background: linear-gradient(
+    127deg,
+    #ffffff 0%,
+    rgba(255, 220, 200, 0.96) 38%,
+    #ff9548 72%,
+    #ff6a00 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
 }
 
 .ticker-card__arrow {
@@ -113,12 +122,12 @@
   top: var(--space-4);
   right: var(--space-4);
   font-size: 1.1rem;
-  color: rgba(201, 168, 124, 0.55);
+  color: rgba(255, 140, 90, 0.55);
   transition: color 0.25s var(--ease-out), transform 0.25s var(--ease-out);
 }
 
 .ticker-card:hover .ticker-card__arrow {
-  color: var(--accent-bright);
+  color: #ff9548;
   transform: translate(2px, -2px);
 }
 
@@ -144,12 +153,16 @@
 
 /* Light mode */
 :root[data-theme='light'] .ticker-card {
-  border-color: rgba(157, 122, 76, 0.2);
-  background: rgba(248, 240, 226, 0.94);
+  border-color: rgba(255, 106, 0, 0.22);
+  background: linear-gradient(165deg, #fffdfb 0%, #faf4eb 100%);
+  box-shadow: 0 8px 28px rgba(90, 50, 28, 0.08);
 }
 
 :root[data-theme='light'] .ticker-card:hover {
-  border-color: rgba(157, 122, 76, 0.48);
+  border-color: rgba(255, 120, 50, 0.42);
+  box-shadow:
+    0 20px 48px rgba(90, 50, 28, 0.12),
+    0 0 0 1px rgba(255, 106, 0, 0.08);
 }
 
 :root[data-theme='light'] .ticker-card__overlay {
@@ -159,6 +172,18 @@
     rgba(20, 12, 4, 0.54) 60%,
     rgba(12, 8, 2, 0.88) 100%
   );
+}
+
+:root[data-theme='light'] .ticker-card__cat {
+  color: rgba(255, 220, 200, 0.92);
+}
+
+:root[data-theme='light'] .ticker-card__title {
+  background: linear-gradient(127deg, #1a1410 0%, #5c2808 38%, #b84a00 72%, #ff6a00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(255, 253, 250, 0.85));
 }
 
 :root[data-theme='light'] .ticker-fade--left {
