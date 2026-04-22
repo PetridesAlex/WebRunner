@@ -100,42 +100,73 @@ export function Navbar({ activeId }) {
           onClick={closeMenu}
         />
 
-        <ul id="primary-navigation" className="nav__links">
-          {navLinks.map(({ id, label }) => (
-            <li key={id}>
-              <a
-                href={`#${id}`}
-                className={activeId === id ? 'nav__link nav__link--active' : 'nav__link'}
-                onClick={closeMenu}
-              >
-                {label}
-              </a>
-            </li>
-          ))}
-          <li className="nav__links-cta">
-            <Button href="#contact" className="btn--sm nav__drawer-cta" onClick={closeMenu}>
-              Start a project
-            </Button>
-          </li>
-          <li className="nav__links-social">
-            <p className="nav__drawer-social-label">Quick chat</p>
-            <div className="nav__drawer-socials">
-              {site.messengerLinks.map(({ id, label, href }) => (
+        <div
+          id="primary-navigation"
+          className="nav__drawer"
+          role="dialog"
+          {...(menuOpen ? { 'aria-modal': true } : {})}
+          aria-labelledby="nav-drawer-title"
+          aria-hidden={!menuOpen}
+          inert={!menuOpen ? true : undefined}
+        >
+          <div className="nav__drawer-header">
+            <h2 id="nav-drawer-title" className="nav__drawer-title">
+              Menu
+            </h2>
+            <button
+              type="button"
+              className="nav__drawer-close"
+              onClick={closeMenu}
+              aria-label="Close menu"
+            >
+              <svg className="nav__drawer-close-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden>
+                <path
+                  d="M18 6L6 18M6 6l12 12"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <ul className="nav__drawer-list">
+            {navLinks.map(({ id, label }) => (
+              <li key={id}>
                 <a
-                  key={id}
-                  href={href}
-                  className={`nav__drawer-social-link nav__drawer-social-link--${id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`#${id}`}
+                  className={activeId === id ? 'nav__link nav__link--active' : 'nav__link'}
                   onClick={closeMenu}
                 >
-                  <MessengerIcon id={id} />
-                  <span>{label}</span>
+                  {label}
                 </a>
-              ))}
-            </div>
-          </li>
-        </ul>
+              </li>
+            ))}
+            <li className="nav__links-cta">
+              <Button href="#contact" className="btn--sm nav__drawer-cta" onClick={closeMenu}>
+                Start a project
+              </Button>
+            </li>
+            <li className="nav__links-social">
+              <p className="nav__drawer-social-label">Quick chat</p>
+              <div className="nav__drawer-socials">
+                {site.messengerLinks.map(({ id, label, href }) => (
+                  <a
+                    key={id}
+                    href={href}
+                    className={`nav__drawer-social-link nav__drawer-social-link--${id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMenu}
+                  >
+                    <MessengerIcon id={id} />
+                    <span>{label}</span>
+                  </a>
+                ))}
+              </div>
+            </li>
+          </ul>
+        </div>
 
         <Button href="#contact" className="nav__cta btn--sm">
           Start a project
