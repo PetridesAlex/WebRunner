@@ -1,5 +1,14 @@
+const envUrl =
+  typeof import.meta !== 'undefined' && import.meta.env?.VITE_SITE_URL
+    ? String(import.meta.env.VITE_SITE_URL).replace(/\/$/, '')
+    : ''
+
 export const site = {
   brand: 'WebRunner',
+  /** Legal / marketing name — used in FormSubmit notification emails */
+  agencyName: 'Webrunner Agency',
+  /** Live site URL, no trailing slash (fixes “localhost” in submission emails when testing locally). Override with VITE_SITE_URL if needed */
+  canonicalUrl: envUrl || 'https://webrunneragency.com',
   name: 'Alex Petrides',
   role: 'Web Designer & Frontend Developer',
   titleLine: 'Websites Built to\nScale.',
@@ -19,7 +28,7 @@ export const site = {
     width: 260,
     height: 433,
   },
-  email: 'info@webrunner.com',
+  email: 'info@webrunneragency.com',
   phone: '',
   location: 'Based in Cyprus · Available worldwide',
   responseTime: 'Usually replies within 24 hours',

@@ -3,12 +3,69 @@ import { site } from '../../data/site'
 import { SectionHeader } from '../ui/SectionHeader'
 import { Button } from '../ui/Button'
 
+const formSubmitUrl = `https://formsubmit.co/ajax/${encodeURIComponent(site.email)}`
+
+function contactFormPageUrl() {
+  return `${site.canonicalUrl}/#contact`
+}
+
 export function Contact() {
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState(null)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    setSent(true)
+    setSent(false)
+    const form = e.currentTarget
+    const fd = new FormData(form)
+    const name = String(fd.get('name') ?? '').trim()
+    const email = String(fd.get('email') ?? '').trim()
+    const phone = String(fd.get('phone') ?? '').trim()
+    const message = String(fd.get('message') ?? '').trim()
+    const gotcha = fd.get('_gotcha')
+
+    setSending(true)
+    setError(null)
+
+    try {
+      const pageUrl = contactFormPageUrl()
+      const res = await fetch(formSubmitUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone: phone || '—',
+          message,
+          /** Shows in the submission table as a clear “from” line */
+          Website: `${site.agencyName} · ${pageUrl}`,
+          _subject: `${site.agencyName} · New inquiry from ${name || 'website visitor'}`,
+          _template: 'box',
+          _replyto: email,
+          _url: pageUrl,
+          _gotcha: gotcha ?? '',
+        }),
+      })
+
+      const data = await res.json().catch(() => ({}))
+
+      if (!res.ok || data.success === false) {
+        throw new Error(
+          typeof data.message === 'string' ? data.message : 'Could not send your message.',
+        )
+      }
+
+      setSent(true)
+      form.reset()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not send your message.')
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -61,6 +118,14 @@ export function Contact() {
           </div>
           <div className="contact__form-wrap" data-reveal>
             <form className="contact__form" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name="_gotcha"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden
+                className="sr-only"
+              />
               <label className="sr-only" htmlFor="name">
                 Name
               </label>
@@ -103,13 +168,18 @@ export function Contact() {
                 required
                 placeholder="Project goals, links, timeline…"
               />
-              <Button type="submit" variant="primary">
-                Send message
+              <Button type="submit" variant="primary" disabled={sending}>
+                {sending ? 'Sending…' : 'Send message'}
               </Button>
-              {sent && (
+              {error && (
+                <p className="contact__error" role="alert">
+                  {error}{' '}
+                  <a href={`mailto:${site.email}`}>Email {site.email}</a> instead.
+                </p>
+              )}
+              {sent && !error && (
                 <p className="contact__thanks" role="status">
-                  Thanks — your message is ready to send. Connect this form to your backend or email
-                  service.
+                  Thanks — your message was sent. We’ll get back to you soon.
                 </p>
               )}
             </form>
