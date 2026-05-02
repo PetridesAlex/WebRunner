@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+import { useVisitor } from '../../context/VisitorContext'
+import { formatOnboardingSummary } from '../../data/onboarding'
 import { site } from '../../data/site'
 import { SectionHeader } from '../ui/SectionHeader'
 import { Button } from '../ui/Button'
@@ -9,10 +11,27 @@ function contactFormPageUrl() {
   return `${site.canonicalUrl}/#contact`
 }
 
+function defaultMessageFromVisitor(visitor) {
+  const pref = formatOnboardingSummary(visitor)
+  const leadBits = [visitor?.name?.trim(), visitor?.phone?.trim(), visitor?.email?.trim()].filter(Boolean)
+  const leadLine =
+    leadBits.length > 0 ? `From onboarding — reach me at: ${leadBits.join(' · ')}.` : ''
+  const parts = [leadLine, pref].filter(Boolean)
+  return parts.length ? `${parts.join('\n\n')}\n\n` : ''
+}
+
 export function Contact() {
+  const { visitor } = useVisitor()
   const [sent, setSent] = useState(false)
   const [sending, setSending] = useState(false)
   const [error, setError] = useState(null)
+
+  const defaultMessage = useMemo(() => defaultMessageFromVisitor(visitor), [visitor])
+  const visitorFormKey = useMemo(
+    () =>
+      `${visitor?.need ?? ''}|${visitor?.business ?? ''}|${visitor?.level ?? ''}|${visitor?.timeline ?? ''}|${visitor?.name ?? ''}|${visitor?.phone ?? ''}|${visitor?.email ?? ''}`,
+    [visitor],
+  )
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -22,8 +41,13 @@ export function Contact() {
     const name = String(fd.get('name') ?? '').trim()
     const email = String(fd.get('email') ?? '').trim()
     const phone = String(fd.get('phone') ?? '').trim()
-    const message = String(fd.get('message') ?? '').trim()
+    let message = String(fd.get('message') ?? '').trim()
     const gotcha = fd.get('_gotcha')
+
+    const pref = formatOnboardingSummary(visitor)
+    if (pref && !message.includes('[From your website preferences]')) {
+      message = `${pref}\n\n${message}`.trim()
+    }
 
     setSending(true)
     setError(null)
@@ -130,43 +154,51 @@ export function Contact() {
                 Name
               </label>
               <input
+                key={`contact-name-${visitorFormKey}`}
                 id="name"
                 name="name"
                 type="text"
                 required
                 placeholder="Your name"
                 autoComplete="name"
+                defaultValue={visitor?.name?.trim() ?? ''}
               />
               <label className="sr-only" htmlFor="email">
                 Email
               </label>
               <input
+                key={`contact-email-${visitorFormKey}`}
                 id="email"
                 name="email"
                 type="email"
                 required
                 placeholder="Email"
                 autoComplete="email"
+                defaultValue={visitor?.email?.trim() ?? ''}
               />
               <label className="sr-only" htmlFor="phone">
                 Phone
               </label>
               <input
+                key={`contact-phone-${visitorFormKey}`}
                 id="phone"
                 name="phone"
                 type="tel"
                 placeholder="Phone number (optional)"
                 autoComplete="tel"
+                defaultValue={visitor?.phone?.trim() ?? ''}
               />
               <label className="sr-only" htmlFor="message">
                 Message
               </label>
               <textarea
+                key={`contact-msg-${visitorFormKey}`}
                 id="message"
                 name="message"
                 rows={5}
                 required
                 placeholder="Project goals, links, timeline…"
+                defaultValue={defaultMessage}
               />
               <Button type="submit" variant="primary" disabled={sending}>
                 {sending ? 'Sending…' : 'Send message'}

@@ -1,3 +1,5 @@
+import { useVisitor } from '../../context/VisitorContext'
+import { heroCaptionFromVisitor } from '../../data/onboarding'
 import { site } from '../../data/site'
 import { Button } from '../ui/Button'
 import { TelegramIcon } from '../icons/TelegramIcon'
@@ -34,7 +36,9 @@ function InstagramIcon({ size = 18, className }) {
 }
 
 export function Hero() {
+  const { visitor } = useVisitor()
   const lines = site.titleLine.split('\n')
+  const visitorCaption = heroCaptionFromVisitor(visitor)
   const telegramHref = site.messengerLinks?.find((m) => m.id === 'telegram')?.href
   const whatsappHref = site.messengerLinks?.find((m) => m.id === 'whatsapp')?.href
   const instagramHref = site.messengerLinks?.find((m) => m.id === 'instagram')?.href
@@ -98,6 +102,11 @@ export function Hero() {
             <span className="hero__eyebrow-line" />
             {site.brand} · Digital studio
           </p>
+          {visitorCaption ? (
+            <p className="hero__visitor" data-reveal>
+              {visitorCaption}
+            </p>
+          ) : null}
           <h1 id="hero-heading" className="hero__title" data-reveal>
             {lines.map((line, i) => (
               <span key={i} className="hero__title-line">
