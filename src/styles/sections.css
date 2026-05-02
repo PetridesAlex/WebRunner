@@ -3011,10 +3011,29 @@
   letter-spacing: 0.04em;
 }
 
-.solutions-card__action .btn--ghost:hover {
-  border-color: rgba(255, 130, 75, 0.42);
-  background: rgba(255, 106, 0, 0.09);
-  color: #ffd4bc;
+.solutions-card__action .btn--ghost:hover,
+.solutions-card__action .btn--ghost:focus-visible {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #ffa05a 0%, #ff751a 48%, #f06000 100%);
+  background-size: 180% 180%;
+  border-color: rgba(255, 220, 180, 0.52);
+  color: #0a0604;
+  font-weight: 700;
+  box-shadow:
+    0 8px 32px rgba(255, 106, 0, 0.42),
+    inset 0 1px 0 rgba(255, 245, 220, 0.4);
+}
+
+.solutions-card__action .btn--ghost:active {
+  transform: translateY(0);
+  background: linear-gradient(135deg, #ff9548 0%, #ff6a00 48%, #e85e00 100%);
+  background-size: 180% 180%;
+  border-color: rgba(255, 200, 150, 0.42);
+  color: #0a0604;
+  font-weight: 700;
+  box-shadow:
+    0 6px 24px rgba(255, 106, 0, 0.38),
+    inset 0 1px 0 rgba(255, 235, 210, 0.35);
 }
 
 /* Featured tier: outline by default (like ghost cards); solid orange only on hover */
@@ -3152,6 +3171,14 @@
     background: linear-gradient(135deg, #ff8533 0%, #ff6a00 48%, #e85e00 100%);
     background-size: 100% 100%;
     color: #0a0604;
+  }
+
+  .solutions-card__action .btn--ghost:hover,
+  .solutions-card__action .btn--ghost:focus-visible,
+  .solutions-card__action .btn--ghost:active {
+    transform: none;
+    background: linear-gradient(135deg, #ff8533 0%, #ff6a00 48%, #e85e00 100%);
+    background-size: 100% 100%;
   }
 }
 
@@ -5469,6 +5496,31 @@
   background: rgba(183, 146, 96, 0.16);
   border-color: rgba(157, 122, 76, 0.55);
   color: #4f381f;
+}
+
+:root[data-theme='light'] .solutions-card__action .btn--ghost:hover,
+:root[data-theme='light'] .solutions-card__action .btn--ghost:focus-visible {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #ffa05a 0%, #ff751a 48%, #f06000 100%);
+  background-size: 180% 180%;
+  border-color: rgba(255, 220, 180, 0.52);
+  color: #0a0604;
+  font-weight: 700;
+  box-shadow:
+    0 8px 32px rgba(255, 106, 0, 0.35),
+    inset 0 1px 0 rgba(255, 245, 220, 0.4);
+}
+
+:root[data-theme='light'] .solutions-card__action .btn--ghost:active {
+  transform: translateY(0);
+  background: linear-gradient(135deg, #ff9548 0%, #ff6a00 48%, #e85e00 100%);
+  background-size: 180% 180%;
+  border-color: rgba(255, 200, 150, 0.42);
+  color: #0a0604;
+  font-weight: 700;
+  box-shadow:
+    0 6px 24px rgba(255, 106, 0, 0.32),
+    inset 0 1px 0 rgba(255, 235, 210, 0.35);
 }
 
 :root[data-theme='light'] .solutions-card--featured .solutions-card__action .btn--primary {

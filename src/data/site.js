@@ -33,10 +33,7 @@ export const site = {
   location: 'Based in Cyprus · Available worldwide',
   responseTime: 'Usually replies within 24 hours',
   year: new Date().getFullYear(),
-  socials: [
-    { label: 'LinkedIn', id: 'linkedin', href: 'https://linkedin.com' },
-    { label: 'GitHub', id: 'github', href: 'https://github.com/PetridesAlex' },
-  ],
+  socials: [{ label: 'GitHub', id: 'github', href: 'https://github.com/PetridesAlex' }],
   /** Mobile drawer — set your real profile URLs */
   messengerLinks: [
     { id: 'telegram', label: 'Telegram', href: 'https://t.me/+35797866884' },
