@@ -141,7 +141,17 @@ export function Contact() {
             </div>
           </div>
           <div className="contact__form-wrap" data-reveal>
-            <form className="contact__form" onSubmit={handleSubmit}>
+            <form className="contact__form" onSubmit={handleSubmit} aria-labelledby="contact-form-heading">
+              <div className="contact__form-intro">
+                <p className="contact__form-intro-eyebrow">Ready when you are</p>
+                <h3 id="contact-form-heading" className="contact__form-intro-title">
+                  Get in touch now
+                </h3>
+                <p className="contact__form-intro-text">
+                  You&apos;re one step away from clarity — send your details and we&apos;ll map the fastest path to your
+                  new site.
+                </p>
+              </div>
               <input
                 type="text"
                 name="_gotcha"
@@ -200,7 +210,7 @@ export function Contact() {
                 placeholder="Project goals, links, timeline…"
                 defaultValue={defaultMessage}
               />
-              <Button type="submit" variant="primary" disabled={sending}>
+              <Button type="submit" variant="primary" className="contact__submit-btn" disabled={sending}>
                 {sending ? 'Sending…' : 'Send message'}
               </Button>
               {error && (

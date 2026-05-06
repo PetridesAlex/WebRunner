@@ -118,7 +118,7 @@ export function Hero() {
             {site.tagline}
           </p>
           <div className="hero__actions" data-reveal>
-            <Button href="#portfolio" variant="primary">
+            <Button href="#portfolio" variant="primary" className="hero__cta-primary">
               View selected work
             </Button>
             <Button href="#contact" variant="ghost">
