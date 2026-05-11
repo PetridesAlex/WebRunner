@@ -21,6 +21,12 @@ export const site = {
     cta: 'Get in touch',
     href: '#contact',
   },
+  /** Hero top bar — second row under the announcement */
+  heroPayments: {
+    label: 'We accept',
+    online: 'Cards & online',
+    crypto: 'Crypto',
+  },
   /** Hero visual — abstract, keeps focus on headline */
   heroImage: {
     src: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=480&h=800&q=80',

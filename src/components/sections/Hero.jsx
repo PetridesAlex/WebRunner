@@ -20,6 +20,51 @@ function WhatsAppIcon({ size = 18, className }) {
   )
 }
 
+function PaymentCardIcon({ className }) {
+  return (
+    <svg className={className} width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="2" y="5" width="20" height="14" rx="2.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M2 10h20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <rect x="5" y="14.5" width="5.5" height="2.2" rx="0.4" fill="currentColor" opacity="0.45" />
+    </svg>
+  )
+}
+
+function CryptoCoinIcon({ className }) {
+  return (
+    <svg className={className} width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <ellipse cx="12" cy="8" rx="6" ry="2.8" stroke="currentColor" strokeWidth="1.35" />
+      <ellipse cx="12" cy="12" rx="6" ry="2.8" stroke="currentColor" strokeWidth="1.35" fill="currentColor" opacity="0.22" />
+      <ellipse cx="12" cy="16" rx="6" ry="2.8" stroke="currentColor" strokeWidth="1.35" />
+    </svg>
+  )
+}
+
+const HERO_PAYMENT_TICKER_REPEAT = 8
+
+function HeroPaymentTickerSegment() {
+  return (
+    <span className="hero__payments-segment">
+      <span className="hero__payments-broadcast-dot" aria-hidden />
+      <span className="hero__payments-headline">{site.heroPayments.label}</span>
+      <span className="hero__payments-pipe" aria-hidden>
+        |
+      </span>
+      <span className="hero__payments-item">
+        <PaymentCardIcon className="hero__payments-icon" />
+        {site.heroPayments.online}
+      </span>
+      <span className="hero__payments-pipe" aria-hidden>
+        |
+      </span>
+      <span className="hero__payments-item hero__payments-item--crypto">
+        <CryptoCoinIcon className="hero__payments-icon" />
+        {site.heroPayments.crypto}
+      </span>
+    </span>
+  )
+}
+
 function InstagramIcon({ size = 18, className }) {
   return (
     <svg
@@ -46,52 +91,73 @@ export function Hero() {
 
   return (
     <section id="hero" className="hero" aria-labelledby="hero-heading">
-      <div className="hero__top-bar" role="region" aria-label="Announcement">
-        <div className="hero__top-bar-inner">
-          <p className="hero__top-bar-text">
-            <span className="hero__top-bar-dot" aria-hidden />
-            {site.heroBanner.text}{' '}
-            <a href={site.heroBanner.href} className="hero__top-bar-link">
-              {site.heroBanner.cta}
-            </a>
-            {hasHeroSocials ? (
-              <span className="hero__top-bar-socials">
-                {telegramHref ? (
-                  <a
-                    href={telegramHref}
-                    className="hero__top-bar-telegram"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Chat on Telegram"
-                  >
-                    <TelegramIcon className="hero__top-bar-telegram-icon" size={18} />
-                  </a>
-                ) : null}
-                {whatsappHref ? (
-                  <a
-                    href={whatsappHref}
-                    className="hero__top-bar-whatsapp"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Chat on WhatsApp"
-                  >
-                    <WhatsAppIcon size={18} className="hero__top-bar-telegram-icon" />
-                  </a>
-                ) : null}
-                {instagramHref ? (
-                  <a
-                    href={instagramHref}
-                    className="hero__top-bar-instagram"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="WebRunner on Instagram"
-                  >
-                    <InstagramIcon size={18} className="hero__top-bar-telegram-icon" />
-                  </a>
-                ) : null}
-              </span>
-            ) : null}
-          </p>
+      <div className="hero__top-bar" role="region" aria-label="Announcement and payments">
+        <div className="hero__top-bar-stack">
+          <div className="hero__top-bar-inner">
+            <p className="hero__top-bar-text">
+              <span className="hero__top-bar-dot" aria-hidden />
+              {site.heroBanner.text}{' '}
+              <a href={site.heroBanner.href} className="hero__top-bar-link">
+                {site.heroBanner.cta}
+              </a>
+              {hasHeroSocials ? (
+                <span className="hero__top-bar-socials">
+                  {telegramHref ? (
+                    <a
+                      href={telegramHref}
+                      className="hero__top-bar-telegram"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Chat on Telegram"
+                    >
+                      <TelegramIcon className="hero__top-bar-telegram-icon" size={18} />
+                    </a>
+                  ) : null}
+                  {whatsappHref ? (
+                    <a
+                      href={whatsappHref}
+                      className="hero__top-bar-whatsapp"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Chat on WhatsApp"
+                    >
+                      <WhatsAppIcon size={18} className="hero__top-bar-telegram-icon" />
+                    </a>
+                  ) : null}
+                  {instagramHref ? (
+                    <a
+                      href={instagramHref}
+                      className="hero__top-bar-instagram"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="WebRunner on Instagram"
+                    >
+                      <InstagramIcon size={18} className="hero__top-bar-telegram-icon" />
+                    </a>
+                  ) : null}
+                </span>
+              ) : null}
+            </p>
+          </div>
+        </div>
+        <div
+          className="hero__payments"
+          aria-label={`${site.heroPayments.label}: ${site.heroPayments.online} and ${site.heroPayments.crypto}`}
+        >
+          <div className="hero__payments-ticker" aria-hidden="true">
+            <div className="hero__payments-row">
+              <div className="hero__payments-track">
+                {Array.from({ length: HERO_PAYMENT_TICKER_REPEAT }, (_, i) => (
+                  <HeroPaymentTickerSegment key={`pay-a-${i}`} />
+                ))}
+              </div>
+              <div className="hero__payments-track">
+                {Array.from({ length: HERO_PAYMENT_TICKER_REPEAT }, (_, i) => (
+                  <HeroPaymentTickerSegment key={`pay-b-${i}`} />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="hero__glow hero__glow--1" aria-hidden />
