@@ -1,3 +1,4 @@
+/* global __BUILD_REF__ */
 import { useVisitor } from '../../context/VisitorContext'
 import { heroCaptionFromVisitor } from '../../data/onboarding'
 import { site } from '../../data/site'
@@ -45,7 +46,6 @@ const HERO_PAYMENT_TICKER_REPEAT = 8
 function HeroPaymentTickerSegment() {
   return (
     <span className="hero__payments-segment">
-      <span className="hero__payments-broadcast-dot" aria-hidden />
       <span className="hero__payments-headline">{site.heroPayments.label}</span>
       <span className="hero__payments-pipe" aria-hidden>
         |
@@ -79,6 +79,8 @@ function InstagramIcon({ size = 18, className }) {
     </svg>
   )
 }
+
+const deployShortSha = typeof __BUILD_REF__ !== 'undefined' ? __BUILD_REF__ : ''
 
 export function Hero() {
   const { visitor } = useVisitor()
@@ -142,19 +144,31 @@ export function Hero() {
         </div>
         <div
           className="hero__payments"
-          aria-label={`${site.heroPayments.label}: ${site.heroPayments.online} and ${site.heroPayments.crypto}`}
+          aria-label={`Live broadcast: ${site.heroPayments.label} ${site.heroPayments.online} and ${site.heroPayments.crypto}`}
+          title={deployShortSha ? `Production build ${deployShortSha} — compare with latest commit on GitHub; redeploy in Vercel if stale` : undefined}
         >
-          <div className="hero__payments-ticker" aria-hidden="true">
-            <div className="hero__payments-row">
-              <div className="hero__payments-track">
-                {Array.from({ length: HERO_PAYMENT_TICKER_REPEAT }, (_, i) => (
-                  <HeroPaymentTickerSegment key={`pay-a-${i}`} />
-                ))}
-              </div>
-              <div className="hero__payments-track">
-                {Array.from({ length: HERO_PAYMENT_TICKER_REPEAT }, (_, i) => (
-                  <HeroPaymentTickerSegment key={`pay-b-${i}`} />
-                ))}
+          <div className="hero__payments-shell">
+            <div className="hero__payments-live" aria-hidden="true">
+              <span className="hero__payments-live-dot" />
+              <span className="hero__payments-live-text">Live</span>
+              {deployShortSha ? (
+                <span className="hero__payments-live-build" title={`Git ${deployShortSha}`}>
+                  {deployShortSha}
+                </span>
+              ) : null}
+            </div>
+            <div className="hero__payments-ticker" aria-hidden="true">
+              <div className="hero__payments-row">
+                <div className="hero__payments-track">
+                  {Array.from({ length: HERO_PAYMENT_TICKER_REPEAT }, (_, i) => (
+                    <HeroPaymentTickerSegment key={`pay-a-${i}`} />
+                  ))}
+                </div>
+                <div className="hero__payments-track">
+                  {Array.from({ length: HERO_PAYMENT_TICKER_REPEAT }, (_, i) => (
+                    <HeroPaymentTickerSegment key={`pay-b-${i}`} />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
