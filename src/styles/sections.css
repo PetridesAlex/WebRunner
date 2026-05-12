@@ -1350,15 +1350,6 @@
   animation: hero-payments-broadcast-pulse 1.6s ease-in-out infinite;
 }
 
-.hero__payments-live-text {
-  font-size: 0.62rem;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #fff5f0;
-  line-height: 1;
-}
-
 .hero__payments-live-build {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.58rem;

@@ -144,13 +144,12 @@ export function Hero() {
         </div>
         <div
           className="hero__payments"
-          aria-label={`Live broadcast: ${site.heroPayments.label} ${site.heroPayments.online} and ${site.heroPayments.crypto}`}
+          aria-label={`${site.heroPayments.label}: ${site.heroPayments.online} and ${site.heroPayments.crypto}`}
           title={deployShortSha ? `Production build ${deployShortSha} — compare with latest commit on GitHub; redeploy in Vercel if stale` : undefined}
         >
           <div className="hero__payments-shell">
             <div className="hero__payments-live" aria-hidden="true">
               <span className="hero__payments-live-dot" />
-              <span className="hero__payments-live-text">Live</span>
               {deployShortSha ? (
                 <span className="hero__payments-live-build" title={`Git ${deployShortSha}`}>
                   {deployShortSha}
