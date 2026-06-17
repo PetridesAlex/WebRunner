@@ -31,11 +31,24 @@ export const projects = [
     category: 'Business & management',
     description:
       'Clean, authority-driven web presence for Kaja Management: structured service positioning, professional tone, and a credible brand identity built to attract serious clients.',
-    image: '/images/kajamanagement-cover.webp',
+    image: '/cover-clients/kajamanagement-cover.webp',
     tech: ['React', 'CMS'],
     live: 'https://kajamanagement.eu/',
     featured: false,
     headerTag: 'Publish',
     year: '2024',
+  },
+  {
+    id: 'komodromos-group',
+    title: 'Komodromos Group of Companies',
+    category: 'Corporate group',
+    description:
+      'Corporate hub for Komodromos Group: a diversified Cyprus conglomerate spanning property, events, storage, and technical services — structured to present each company clearly under one trusted brand.',
+    image: '/cover-clients/komodromos-group-cover.webp',
+    tech: ['React', 'CMS'],
+    live: 'https://www.komodromosgroup.com/en/',
+    featured: false,
+    headerTag: 'Publish',
+    year: '2025',
   },
 ]
