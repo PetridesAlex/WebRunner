@@ -8,6 +8,14 @@ function externalLinkProps(href) {
   return {}
 }
 
+function projectCardClass(p, base) {
+  return [base, p.kind === 'saas' && 'project-card--saas'].filter(Boolean).join(' ')
+}
+
+function projectCtaLabel(p) {
+  return p.kind === 'saas' ? 'View platform' : 'Live demo'
+}
+
 export function Portfolio() {
   const featured = projects.filter((p) => p.featured)
   const rest = projects.filter((p) => !p.featured)
@@ -23,7 +31,7 @@ export function Portfolio() {
         />
 
         {featured.map((p) => (
-          <article key={p.id} className="project-card project-card--featured" data-reveal>
+          <article key={p.id} className={projectCardClass(p, 'project-card project-card--featured')} data-reveal>
             <a
               href={p.live}
               className="project-card__media"
@@ -31,6 +39,7 @@ export function Portfolio() {
               {...externalLinkProps(p.live)}
             >
               <img src={p.image} alt="" width={1200} height={750} loading="lazy" />
+              {p.kind === 'saas' && <span className="project-card__saas-badge">SaaS · CRM</span>}
             </a>
             <div className="project-card__body">
               <div className="project-card__header-band">
@@ -50,7 +59,7 @@ export function Portfolio() {
               </ul>
               <div className="project-card__links">
                 <a href={p.live} className="project-card__btn" {...externalLinkProps(p.live)}>
-                  Live demo
+                  {projectCtaLabel(p)}
                 </a>
               </div>
             </div>
@@ -59,7 +68,7 @@ export function Portfolio() {
 
         <div className="portfolio__grid">
           {rest.map((p) => (
-            <article key={p.id} className="project-card project-card--compact" data-reveal>
+            <article key={p.id} className={projectCardClass(p, 'project-card project-card--compact')} data-reveal>
               <a
                 href={p.live}
                 className="project-card__media"
@@ -67,6 +76,7 @@ export function Portfolio() {
                 {...externalLinkProps(p.live)}
               >
                 <img src={p.image} alt="" width={800} height={500} loading="lazy" />
+                {p.kind === 'saas' && <span className="project-card__saas-badge">SaaS · CRM</span>}
               </a>
               <div className="project-card__body">
                 <div className="project-card__header-band">
@@ -86,7 +96,7 @@ export function Portfolio() {
                 </ul>
                 <div className="project-card__links">
                   <a href={p.live} className="project-card__btn" {...externalLinkProps(p.live)}>
-                    Live demo
+                    {projectCtaLabel(p)}
                   </a>
                 </div>
               </div>

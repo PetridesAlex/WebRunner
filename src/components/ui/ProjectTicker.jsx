@@ -41,7 +41,7 @@ export function ProjectTicker() {
           <a
             key={`${p.id}-${i}`}
             href={p.live}
-            className="ticker-card"
+            className={['ticker-card', p.kind === 'saas' && 'ticker-card--saas'].filter(Boolean).join(' ')}
             {...externalLinkProps(p.live)}
             tabIndex={i < projects.length ? 0 : -1}
             aria-label={`View ${p.title}`}
@@ -49,6 +49,7 @@ export function ProjectTicker() {
             <div className="ticker-card__media">
               <img src={p.image} alt="" loading="lazy" />
               <div className="ticker-card__overlay" />
+              {p.kind === 'saas' && <span className="ticker-card__badge">SaaS</span>}
             </div>
             <div className="ticker-card__body">
               <span className="ticker-card__cat">{p.category}</span>

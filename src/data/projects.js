@@ -51,4 +51,18 @@ export const projects = [
     headerTag: 'Publish',
     year: '2025',
   },
+  {
+    id: 'travel-hub-crm',
+    title: 'Travel-Hub-Crm',
+    category: 'CRM platform',
+    description:
+      'SaaS workspace for travel agencies: unified leads, bookings, AI proposals, and team alerts — built as a secure multi-agency platform with a polished product experience.',
+    image: '/cover-clients/travel-hub-crm-cover.webp',
+    tech: ['React', 'Supabase', 'AI'],
+    live: 'https://travel-hub-crm.vercel.app',
+    featured: false,
+    headerTag: 'SaaS platform',
+    year: '2025',
+    kind: 'saas',
+  },
 ]
