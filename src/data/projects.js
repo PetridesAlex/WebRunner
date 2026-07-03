@@ -46,7 +46,7 @@ export const projects = [
       'Corporate hub for Komodromos Group: a diversified Cyprus conglomerate spanning property, events, storage, and technical services — structured to present each company clearly under one trusted brand.',
     image: '/cover-clients/komodromos-group-cover.webp',
     tech: ['React', 'CMS'],
-    live: 'https://www.komodromosgroup.com/en/',
+    live: 'https://www.komodromosgroup.com/',
     featured: false,
     headerTag: 'Publish',
     year: '2025',
