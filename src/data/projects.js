@@ -65,4 +65,18 @@ export const projects = [
     year: '2025',
     kind: 'saas',
   },
+  {
+    id: 'higgsfield',
+    title: 'Higgsfield',
+    category: 'AI creative platform',
+    description:
+      'AI-native creative suite for video and image generation: unified access to 30+ models, Cinema Studio, viral presets, and agentic workflows — built for creators, agencies, and filmmakers at scale.',
+    image: '/cover-clients/higgsfield-cover.png',
+    tech: ['React', 'AI', 'MCP'],
+    live: 'https://higgsfield.ai',
+    featured: false,
+    headerTag: 'SaaS platform',
+    year: '2025',
+    kind: 'saas',
+  },
 ]
