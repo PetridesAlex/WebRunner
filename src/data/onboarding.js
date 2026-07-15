@@ -5,11 +5,11 @@ export const ONBOARDING = [
     question: 'What do you need a website for?',
     microcopy: 'Pick what matters most right now — we’ll tailor everything around it.',
     options: [
-      { id: 'launch-new-business', label: 'Launch a new business' },
-      { id: 'redesign-website', label: 'Redesign my current website' },
-      { id: 'more-leads', label: 'Get more clients / leads' },
-      { id: 'sell-online', label: 'Sell products online' },
-      { id: 'portfolio-brand', label: 'Portfolio / personal brand' },
+      { id: 'launch-new-business', label: 'Launch a new business', hint: 'Make a strong first impression from day one' },
+      { id: 'redesign-website', label: 'Redesign my current website', hint: 'Modern look, faster speed, better results' },
+      { id: 'more-leads', label: 'Get more clients / leads', hint: 'Turn visitors into enquiries and bookings' },
+      { id: 'sell-online', label: 'Sell products online', hint: 'A shop experience built to drive sales' },
+      { id: 'portfolio-brand', label: 'Portfolio / personal brand', hint: 'Showcase your work with editorial polish' },
     ],
   },
   {
@@ -17,12 +17,12 @@ export const ONBOARDING = [
     question: 'What best describes your business?',
     microcopy: 'So I can speak your industry’s language from day one.',
     options: [
-      { id: 'real-estate', label: 'Real Estate' },
-      { id: 'travel-tourism', label: 'Travel / Tourism' },
-      { id: 'ecommerce', label: 'eCommerce' },
-      { id: 'corporate', label: 'Corporate / Business' },
-      { id: 'personal-brand', label: 'Personal Brand / Portfolio' },
-      { id: 'other', label: 'Other' },
+      { id: 'real-estate', label: 'Real Estate', hint: 'Listings, trust, and lead capture' },
+      { id: 'travel-tourism', label: 'Travel / Tourism', hint: 'Inspire bookings with rich visuals' },
+      { id: 'ecommerce', label: 'eCommerce', hint: 'Product-first layouts that convert' },
+      { id: 'corporate', label: 'Corporate / Business', hint: 'Authority, clarity, and credibility' },
+      { id: 'personal-brand', label: 'Personal Brand / Portfolio', hint: 'Stand out with a signature presence' },
+      { id: 'other', label: 'Other', hint: 'Tell us your niche — we adapt fast' },
     ],
   },
   {
@@ -30,9 +30,9 @@ export const ONBOARDING = [
     question: 'What level of website are you looking for?',
     microcopy: 'From lean launches to fully bespoke builds — all in.',
     options: [
-      { id: 'simple-clean', label: 'Simple & clean' },
-      { id: 'professional-modern', label: 'Professional & modern' },
-      { id: 'high-end-custom', label: 'High-end & fully custom' },
+      { id: 'simple-clean', label: 'Simple & clean', hint: 'Essentials done beautifully' },
+      { id: 'professional-modern', label: 'Professional & modern', hint: 'Polished UX with room to grow' },
+      { id: 'high-end-custom', label: 'High-end & fully custom', hint: 'Bespoke design, zero compromise' },
     ],
   },
   {
@@ -40,9 +40,9 @@ export const ONBOARDING = [
     question: 'How soon do you need your website?',
     microcopy: 'No pressure — just so I know how to prioritise your roadmap.',
     options: [
-      { id: 'asap', label: 'As soon as possible' },
-      { id: 'two-three-weeks', label: 'Within 2–3 weeks' },
-      { id: 'exploring', label: 'Just exploring ideas' },
+      { id: 'asap', label: 'As soon as possible', hint: 'Fast-track your launch' },
+      { id: 'two-three-weeks', label: 'Within 2–3 weeks', hint: 'Planned build with clear milestones' },
+      { id: 'exploring', label: 'Just exploring ideas', hint: 'No rush — discover what fits' },
     ],
   },
 ]

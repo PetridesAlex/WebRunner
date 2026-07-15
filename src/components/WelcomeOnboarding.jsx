@@ -13,6 +13,117 @@ function getWhatsAppUrl() {
 
 const emptyAnswers = () => ({ need: '', business: '', level: '', timeline: '' })
 
+const OPTION_ICONS = {
+  'launch-new-business': (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M12 3l2.2 6.8H21l-5.5 4 2.1 6.7L12 16.4 6.4 20.5l2.1-6.7L3 9.8h6.8L12 3z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  ),
+  'redesign-website': (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M4 7h16M4 12h10M4 17h7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M17 14l3 3-5 5-3-3 5-5z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  ),
+  'more-leads': (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+  'sell-online': (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M6 6h15l-1.5 9H7.5L6 6z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M6 6L5 3H2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="9" cy="20" r="1.5" fill="currentColor" />
+      <circle cx="18" cy="20" r="1.5" fill="currentColor" />
+    </svg>
+  ),
+  'portfolio-brand': (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M8 11l3 3 5-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  'real-estate': (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M3 11l9-8 9 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5 10v10h14V10" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  ),
+  'travel-tourism': (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  ),
+  ecommerce: (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M4 7h16l-1 12H5L4 7z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M9 11h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+  corporate: (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="4" y="3" width="16" height="18" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+  'personal-brand': (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M4 21c1.5-4 14.5-4 16 0" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+  other: (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+      <circle cx="6" cy="12" r="1.5" fill="currentColor" />
+      <circle cx="18" cy="12" r="1.5" fill="currentColor" />
+    </svg>
+  ),
+  'simple-clean': (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="4" y="5" width="16" height="14" rx="2" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M8 10h8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+  'professional-modern': (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M4 6h16v12H4z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M8 10h8M8 14h5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+  'high-end-custom': (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7L12 17.8 5.7 21l2.3-7-6-4.6h7.6L12 2z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  ),
+  asap: (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M12 7v5l3 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+  'two-three-weeks': (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+  exploring: (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+}
+
+function OptionIcon({ id }) {
+  return <span className="welcome-onboarding__card-icon">{OPTION_ICONS[id] ?? OPTION_ICONS.other}</span>
+}
+
 export function WelcomeOnboarding({ onComplete, onSkip }) {
   const [view, setView] = useState('quiz')
   const [step, setStep] = useState(0)
@@ -106,13 +217,32 @@ export function WelcomeOnboarding({ onComplete, onSkip }) {
         </div>
         {view === 'quiz' ? (
           <nav className="welcome-onboarding__steps" aria-label="Question progress">
-            {ONBOARDING.map((s, i) => (
-              <span
-                key={s.id}
-                className={`welcome-onboarding__dot ${i === step ? 'is-active' : ''} ${i < step ? 'is-done' : ''}`}
-                aria-current={i === step ? 'step' : undefined}
+            <div className="welcome-onboarding__progress-track" aria-hidden>
+              <motion.div
+                className="welcome-onboarding__progress-fill"
+                initial={false}
+                animate={{ width: `${((step + 1) / ONBOARDING.length) * 100}%` }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               />
-            ))}
+            </div>
+            <div className="welcome-onboarding__dots">
+              {ONBOARDING.map((s, i) => (
+                <span
+                  key={s.id}
+                  className={`welcome-onboarding__dot ${i === step ? 'is-active' : ''} ${i < step ? 'is-done' : ''}`}
+                  aria-current={i === step ? 'step' : undefined}
+                  aria-label={`Step ${i + 1}${i < step ? ', completed' : i === step ? ', current' : ''}`}
+                >
+                  {i < step ? (
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden>
+                      <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  ) : (
+                    <span className="welcome-onboarding__dot-num">{i + 1}</span>
+                  )}
+                </span>
+              ))}
+            </div>
           </nav>
         ) : (
           <p className="welcome-onboarding__results-pill" aria-hidden>
@@ -148,20 +278,23 @@ export function WelcomeOnboarding({ onComplete, onSkip }) {
                     className={`welcome-onboarding__card ${selected === opt.id ? 'is-selected' : ''}`}
                     onClick={() => selectOption(opt.id)}
                     aria-pressed={selected === opt.id}
-                    initial={{ opacity: 0, y: 22 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    whileHover={{ y: -3, transition: { duration: 0.22 } }}
+                    whileTap={{ scale: 0.985, y: 0 }}
                     transition={{
-                      delay: i * 0.072,
-                      duration: 0.45,
+                      delay: i * 0.06,
+                      duration: 0.42,
                       ease: [0.22, 1, 0.36, 1],
                     }}
                   >
                     <span className="welcome-onboarding__card-edge" aria-hidden />
                     <span className="welcome-onboarding__card-glow" aria-hidden />
                     <span className="welcome-onboarding__card-shine" aria-hidden />
-                    <span className="welcome-onboarding__card-rail" aria-hidden />
+                    <OptionIcon id={opt.id} />
                     <span className="welcome-onboarding__card-body">
                       <span className="welcome-onboarding__card-label">{opt.label}</span>
+                      {opt.hint ? <span className="welcome-onboarding__card-hint">{opt.hint}</span> : null}
                     </span>
                     <span className="welcome-onboarding__card-check" aria-hidden>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>

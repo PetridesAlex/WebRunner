@@ -118,34 +118,92 @@
 
 .welcome-onboarding__steps {
   display: flex;
-  gap: 0.45rem;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.55rem;
+  min-width: min(168px, 42vw);
+}
+
+.welcome-onboarding__progress-track {
+  width: 100%;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 106, 0, 0.1);
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(120, 80, 40, 0.08);
+}
+
+.welcome-onboarding__progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ffb06a 0%, #ff8533 45%, #ff6a00 100%);
+  box-shadow: 0 0 12px rgba(255, 106, 0, 0.35);
+}
+
+.welcome-onboarding__dots {
+  display: flex;
+  gap: 0.5rem;
   align-items: center;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .welcome-onboarding__dot {
-  width: 9px;
-  height: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
   border-radius: var(--radius-pill);
-  background: rgba(255, 106, 0, 0.12);
-  border: 1px solid rgba(255, 106, 0, 0.18);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 106, 0, 0.16);
+  color: #a06830;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
   transition:
-    background var(--duration-fast) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out),
-    box-shadow var(--duration-fast) var(--ease-out);
+    background 0.35s var(--ease-out),
+    border-color 0.35s var(--ease-out),
+    color 0.35s var(--ease-out),
+    transform 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out);
+}
+
+.welcome-onboarding__dot-num {
+  display: block;
+  transform: translateY(0.5px);
 }
 
 .welcome-onboarding__dot.is-done {
-  background: rgba(255, 130, 75, 0.45);
-  border-color: rgba(255, 106, 0, 0.35);
+  background: linear-gradient(135deg, rgba(255, 180, 120, 0.35) 0%, rgba(255, 106, 0, 0.18) 100%);
+  border-color: rgba(255, 106, 0, 0.32);
+  color: #c45a12;
 }
 
 .welcome-onboarding__dot.is-active {
   background: linear-gradient(135deg, #ff9548 0%, #ff6a00 55%, #e85e00 100%);
-  border-color: rgba(255, 220, 180, 0.35);
-  transform: scale(1.2);
+  border-color: rgba(255, 220, 180, 0.45);
+  color: #fff;
+  transform: scale(1.08);
   box-shadow:
-    0 0 18px rgba(255, 106, 0, 0.55),
-    0 0 36px rgba(255, 106, 0, 0.15);
+    0 0 0 3px rgba(255, 106, 0, 0.14),
+    0 0 20px rgba(255, 106, 0, 0.45);
+  animation: welcome-dot-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes welcome-dot-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 3px rgba(255, 106, 0, 0.14),
+      0 0 20px rgba(255, 106, 0, 0.45);
+  }
+  50% {
+    box-shadow:
+      0 0 0 5px rgba(255, 106, 0, 0.08),
+      0 0 28px rgba(255, 106, 0, 0.55);
+  }
 }
 
 .welcome-onboarding__results-pill {
@@ -252,7 +310,7 @@
 .welcome-onboarding__options {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-3);
   width: 100%;
 }
 
@@ -277,34 +335,33 @@
 .welcome-onboarding__card {
   position: relative;
   display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  gap: var(--space-5);
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-4);
   width: 100%;
   min-width: 0;
-  min-height: clamp(4.75rem, 12vw, 6.25rem);
-  padding: 1.2rem 1.35rem 1.2rem 1.1rem;
+  min-height: clamp(4.5rem, 11vw, 5.5rem);
+  padding: 1rem 1.15rem 1rem 1rem;
   text-align: left;
   font-family: inherit;
   font-size: clamp(1rem, 2.8vw, 1.125rem);
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.35;
   letter-spacing: 0.01em;
   color: #3a2f22;
   background:
     linear-gradient(165deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 252, 246, 0.94) 50%, rgba(255, 245, 235, 0.88) 100%);
-  border: 1px solid rgba(255, 106, 0, 0.2);
-  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 106, 0, 0.16);
+  border-radius: calc(var(--radius-lg) + 2px);
   cursor: pointer;
   overflow: hidden;
   box-shadow:
-    0 8px 28px rgba(120, 80, 40, 0.1),
+    0 4px 18px rgba(120, 80, 40, 0.07),
     inset 0 1px 0 rgba(255, 255, 255, 0.98);
   transition:
     border-color 0.28s var(--ease-out),
     background 0.28s var(--ease-out),
     color 0.28s var(--ease-out),
-    transform 0.32s var(--ease-smooth),
     box-shadow 0.32s var(--ease-smooth);
 }
 
@@ -361,28 +418,31 @@
   position: absolute;
   inset: -1px;
   opacity: 0;
-  background: radial-gradient(ellipse 95% 130% at 20% 0%, rgba(255, 120, 70, 0.28), transparent 62%);
+  background: radial-gradient(ellipse 80% 120% at 0% 50%, rgba(255, 120, 70, 0.22), transparent 65%);
   transition: opacity 0.4s var(--ease-out);
   pointer-events: none;
 }
 
-.welcome-onboarding__card-rail {
+.welcome-onboarding__card-icon {
   position: relative;
   z-index: 1;
   flex-shrink: 0;
-  width: 4px;
-  align-self: stretch;
-  min-height: 2.75rem;
-  border-radius: var(--radius-pill);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 180, 130, 0.45) 0%,
-    rgba(255, 106, 0, 0.35) 45%,
-    rgba(255, 106, 0, 0.08) 100%
-  );
-  opacity: 0.55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: calc(var(--radius-md) + 2px);
+  color: #c45a12;
+  background: linear-gradient(145deg, rgba(255, 245, 235, 0.95) 0%, rgba(255, 230, 205, 0.55) 100%);
+  border: 1px solid rgba(255, 106, 0, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 4px 12px rgba(255, 106, 0, 0.08);
   transition:
-    opacity 0.28s var(--ease-out),
+    transform 0.28s var(--ease-out),
+    background 0.28s var(--ease-out),
+    color 0.28s var(--ease-out),
     box-shadow 0.28s var(--ease-out);
 }
 
@@ -391,34 +451,35 @@
   z-index: 1;
   flex: 1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.2rem;
   min-width: 0;
 }
 
 .welcome-onboarding__card:hover {
-  border-color: rgba(255, 106, 0, 0.35);
+  border-color: rgba(255, 106, 0, 0.32);
   color: var(--text);
-  transform: translateY(-4px) scale(1.01);
   box-shadow:
-    0 18px 40px rgba(255, 106, 0, 0.14),
-    0 0 0 1px rgba(255, 130, 75, 0.12),
+    0 14px 32px rgba(255, 106, 0, 0.12),
+    0 0 0 1px rgba(255, 130, 75, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 .welcome-onboarding__card.is-selected {
-  border-color: rgba(255, 106, 0, 0.45);
+  border-color: rgba(255, 106, 0, 0.42);
   background: linear-gradient(
     155deg,
-    rgba(255, 106, 0, 0.14) 0%,
-    rgba(255, 252, 246, 0.96) 58%
+    rgba(255, 106, 0, 0.1) 0%,
+    rgba(255, 252, 246, 0.98) 62%
   );
   color: var(--text);
   font-weight: 700;
-  transform: translateY(-2px);
   box-shadow:
-    0 0 0 1px rgba(255, 106, 0, 0.28),
-    0 16px 40px rgba(255, 106, 0, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    0 0 0 1px rgba(255, 106, 0, 0.22),
+    0 12px 36px rgba(255, 106, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98);
 }
 
 .welcome-onboarding__card:hover .welcome-onboarding__card-edge {
@@ -429,9 +490,12 @@
   opacity: 1;
 }
 
-.welcome-onboarding__card:hover .welcome-onboarding__card-rail {
-  opacity: 1;
-  box-shadow: 0 0 18px rgba(255, 106, 0, 0.35);
+.welcome-onboarding__card:hover .welcome-onboarding__card-icon {
+  transform: scale(1.05);
+  color: #ff6a00;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 6px 16px rgba(255, 106, 0, 0.18);
 }
 
 .welcome-onboarding__card.is-selected .welcome-onboarding__card-edge {
@@ -439,21 +503,38 @@
 }
 
 .welcome-onboarding__card.is-selected .welcome-onboarding__card-glow {
-  opacity: 0.95;
+  opacity: 0.85;
 }
 
-.welcome-onboarding__card.is-selected .welcome-onboarding__card-rail {
-  opacity: 1;
-  background: linear-gradient(180deg, #ffc89a 0%, #ff8533 48%, #ff6a00 100%);
-  box-shadow: 0 0 22px rgba(255, 106, 0, 0.45);
+.welcome-onboarding__card.is-selected .welcome-onboarding__card-icon {
+  color: #fff;
+  background: linear-gradient(135deg, #ffa05a 0%, #ff751a 48%, #f06000 100%);
+  border-color: rgba(255, 220, 180, 0.4);
+  box-shadow: 0 6px 18px rgba(255, 106, 0, 0.35);
 }
 
 .welcome-onboarding__card-label {
   position: relative;
   z-index: 1;
-  color: #3a2f22;
+  color: #2a2319;
+  font-size: clamp(0.98rem, 2.6vw, 1.08rem);
+  font-weight: 600;
+  line-height: 1.3;
   word-break: normal;
   overflow-wrap: anywhere;
+}
+
+.welcome-onboarding__card-hint {
+  display: block;
+  font-size: clamp(0.78rem, 2.2vw, 0.86rem);
+  font-weight: 500;
+  line-height: 1.45;
+  color: #8a7560;
+  letter-spacing: 0.01em;
+}
+
+.welcome-onboarding__card.is-selected .welcome-onboarding__card-hint {
+  color: #6f5f4b;
 }
 
 .welcome-onboarding__card-check {
@@ -464,35 +545,44 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
   border-radius: var(--radius-pill);
-  color: rgba(180, 120, 70, 0.45);
-  border: 1px solid rgba(255, 106, 0, 0.18);
-  background: rgba(255, 255, 255, 0.75);
+  color: rgba(180, 120, 70, 0.35);
+  border: 1.5px solid rgba(255, 106, 0, 0.14);
+  background: rgba(255, 255, 255, 0.8);
   transition:
     color var(--duration-fast) var(--ease-out),
     background var(--duration-fast) var(--ease-out),
     border-color var(--duration-fast) var(--ease-out),
-    transform 0.28s var(--ease-out);
+    transform 0.28s var(--ease-out),
+    opacity 0.28s var(--ease-out);
+  opacity: 0.65;
 }
 
 .welcome-onboarding__card:hover .welcome-onboarding__card-check {
   color: rgba(200, 90, 25, 0.85);
-  border-color: rgba(255, 106, 0, 0.35);
-  transform: scale(1.05);
+  border-color: rgba(255, 106, 0, 0.3);
+  opacity: 1;
+  transform: scale(1.04);
 }
 
 .welcome-onboarding__card.is-selected .welcome-onboarding__card-check {
   color: #0a0604;
   background: linear-gradient(135deg, #ffa05a 0%, #ff751a 48%, #f06000 100%);
   border-color: rgba(255, 220, 180, 0.45);
-  box-shadow: 0 5px 18px rgba(255, 106, 0, 0.4);
-  transform: scale(1.06);
+  box-shadow: 0 4px 14px rgba(255, 106, 0, 0.35);
+  opacity: 1;
+  transform: scale(1.05);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .welcome-onboarding__bg-gradient {
+    animation: none;
+  }
+
+  .welcome-onboarding__dot.is-active {
     animation: none;
   }
 
@@ -502,11 +592,6 @@
       background 0.28s var(--ease-out),
       color 0.28s var(--ease-out),
       box-shadow 0.28s var(--ease-out);
-  }
-
-  .welcome-onboarding__card:hover,
-  .welcome-onboarding__card.is-selected {
-    transform: none;
   }
 
   .welcome-onboarding__card:hover .welcome-onboarding__card-shine {
