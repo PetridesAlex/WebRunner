@@ -3911,6 +3911,19 @@
   transform: translateY(-1px);
 }
 
+.project-card__btn--soon {
+  cursor: default;
+  opacity: 0.72;
+}
+
+.project-card__btn--soon:hover {
+  transform: none;
+}
+
+.project-card__media--static {
+  cursor: default;
+}
+
 @media (max-width: 900px) {
   .project-card--featured,
   .project-card--compact {

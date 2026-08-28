@@ -10,7 +10,7 @@ export function Services() {
           titleId="services-heading"
           eyebrow="Services"
           title="Web solutions built for real growth"
-          subtitle="From strategic business sites to high-performance stores - modern websites designed to attract, convert, and scale."
+          subtitle="Web design and development for Cyprus businesses and global brands — from strategic business sites to high-performance stores built to attract, convert, and scale."
         />
         <div className="services__grid">
           {services.map((s) => (

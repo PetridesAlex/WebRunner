@@ -1,0 +1,410 @@
+/* =============================================
+   WebRunner Portal Gate — premium logo unlock
+   ============================================= */
+
+.portal-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.portal-gate__bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 55% at 12% 0%, rgba(255, 106, 0, 0.28), transparent 55%),
+    radial-gradient(ellipse 65% 50% at 92% 18%, rgba(255, 130, 75, 0.16), transparent 50%),
+    radial-gradient(ellipse 70% 45% at 50% 100%, rgba(255, 80, 0, 0.12), transparent 55%),
+    linear-gradient(168deg, #0a0908 0%, #060504 42%, #020201 100%);
+  pointer-events: none;
+}
+
+.portal-gate__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  animation: portal-gate-orb-drift 16s ease-in-out infinite alternate;
+}
+
+.portal-gate__orb--a {
+  top: -8%;
+  left: -6%;
+  width: min(42vw, 420px);
+  height: min(42vw, 420px);
+  background: rgba(255, 106, 0, 0.22);
+}
+
+.portal-gate__orb--b {
+  right: -4%;
+  bottom: 8%;
+  width: min(36vw, 360px);
+  height: min(36vw, 360px);
+  background: rgba(255, 149, 72, 0.14);
+  animation-delay: -6s;
+}
+
+@keyframes portal-gate-orb-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(3%, -4%) scale(1.08);
+    opacity: 1;
+  }
+}
+
+.portal-gate__grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(255, 106, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 106, 0, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 85% 75% at 50% 45%, #000 20%, transparent 72%);
+  pointer-events: none;
+}
+
+.portal-gate__noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.portal-gate__vignette {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 140px rgba(0, 0, 0, 0.65);
+  pointer-events: none;
+}
+
+.portal-gate__stage {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+}
+
+.portal-gate__unlock {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.portal-gate__unlock:disabled {
+  cursor: default;
+}
+
+.portal-gate__stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.25rem, 4vw, 1.75rem);
+}
+
+/* Logo block */
+.portal-gate__logo-block {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(9.5rem, 34vw, 12.5rem);
+  height: clamp(9.5rem, 34vw, 12.5rem);
+}
+
+.portal-gate__pulse {
+  position: absolute;
+  inset: 4%;
+  border-radius: 30%;
+  border: 1px solid rgba(255, 106, 0, 0.28);
+  animation: portal-gate-pulse 2.8s ease-out infinite;
+  pointer-events: none;
+}
+
+.portal-gate__pulse--delayed {
+  animation-delay: 1.4s;
+}
+
+@keyframes portal-gate-pulse {
+  0% {
+    transform: scale(0.94);
+    opacity: 0.6;
+  }
+  70%,
+  100% {
+    transform: scale(1.28);
+    opacity: 0;
+  }
+}
+
+.portal-gate__button-shell {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.portal-gate__button-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 30%;
+  padding: 2px;
+  background: conic-gradient(
+    from 210deg,
+    rgba(255, 106, 0, 0.15),
+    rgba(255, 180, 110, 0.85) 18%,
+    rgba(255, 106, 0, 0.35) 36%,
+    rgba(255, 220, 180, 0.75) 52%,
+    rgba(255, 106, 0, 0.4) 68%,
+    rgba(255, 160, 90, 0.9) 84%,
+    rgba(255, 106, 0, 0.15)
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  animation: portal-gate-ring-spin 14s linear infinite;
+  opacity: 0.85;
+}
+
+.portal-gate__button-glow {
+  position: absolute;
+  inset: -6%;
+  border-radius: 32%;
+  background: radial-gradient(circle at 50% 42%, rgba(255, 106, 0, 0.22), transparent 62%);
+  filter: blur(8px);
+  opacity: 0.9;
+}
+
+.portal-gate__unlock:hover .portal-gate__button-ring {
+  opacity: 1;
+}
+
+.portal-gate__unlock:hover .portal-gate__button-glow {
+  opacity: 1;
+  background: radial-gradient(circle at 50% 42%, rgba(255, 106, 0, 0.32), transparent 62%);
+}
+
+@keyframes portal-gate-ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.portal-gate__logo-wrap {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.portal-gate__logo-frame {
+  position: relative;
+  display: block;
+  width: clamp(8rem, 30vw, 10.75rem);
+  height: clamp(8rem, 30vw, 10.75rem);
+  border-radius: 28%;
+  overflow: hidden;
+  background: linear-gradient(145deg, #ff8533 0%, #ff6a00 48%, #e85a00 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -18px 36px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(255, 180, 120, 0.35),
+    0 20px 50px rgba(0, 0, 0, 0.55),
+    0 0 72px rgba(255, 106, 0, 0.35);
+}
+
+.portal-gate__logo {
+  display: block;
+  width: 118%;
+  height: 118%;
+  margin: -9%;
+  object-fit: cover;
+  border-radius: 28%;
+}
+
+.portal-gate__logo-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.06) 28%,
+    transparent 52%
+  );
+  pointer-events: none;
+}
+
+.portal-gate__burst {
+  position: absolute;
+  inset: -12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 160, 90, 0.5) 0%, rgba(255, 106, 0, 0.2) 38%, transparent 68%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Lock scene — below logo */
+.portal-gate__lock-scene {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 4.5rem;
+}
+
+.portal-gate__lock-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(7.5rem, 28vw, 9.5rem);
+  height: 3.75rem;
+}
+
+.portal-gate__lock {
+  position: relative;
+  z-index: 2;
+  width: 3.4rem;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.4));
+}
+
+.portal-gate__lock-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.portal-gate__key {
+  position: absolute;
+  left: 0.15rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 3px 10px rgba(255, 106, 0, 0.45));
+  transform-origin: 18% 50%;
+  will-change: transform;
+}
+
+.portal-gate__key-glint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: -1.375rem 0 0 -1.375rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 210, 160, 0.55) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Premium Unlock label */
+.portal-gate__label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: -0.15rem;
+}
+
+.portal-gate__label-text {
+  font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+  font-size: clamp(0.95rem, 3.2vw, 1.15rem);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  text-indent: 0.34em;
+  background: linear-gradient(105deg, #fff4e8 0%, #ffc98a 42%, #ff8533 78%, #ff6a00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 28px rgba(255, 106, 0, 0.25);
+  transition: letter-spacing 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portal-gate__label-line {
+  display: block;
+  width: 2.75rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 180, 110, 0.85) 20%,
+    rgba(255, 106, 0, 0.95) 50%,
+    rgba(255, 180, 110, 0.85) 80%,
+    transparent
+  );
+  opacity: 0.75;
+  transform-origin: center;
+  animation: portal-gate-label-shimmer 3.2s ease-in-out infinite;
+}
+
+@keyframes portal-gate-label-shimmer {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scaleX(0.92);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scaleX(1);
+  }
+}
+
+.portal-gate__unlock.is-unlocking .portal-gate__pulse {
+  animation: none;
+  opacity: 0;
+}
+
+.portal-gate__unlock.is-unlocking .portal-gate__button-ring {
+  animation: none;
+  opacity: 1;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 220, 180, 0.95),
+    rgba(255, 106, 0, 0.7),
+    rgba(255, 180, 110, 0.95),
+    rgba(255, 106, 0, 0.7)
+  );
+}
+
+.portal-gate__unlock.is-unlocking .portal-gate__label-line {
+  animation: none;
+  opacity: 0.35;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal-gate__orb,
+  .portal-gate__pulse,
+  .portal-gate__button-ring,
+  .portal-gate__label-line {
+    animation: none;
+  }
+}

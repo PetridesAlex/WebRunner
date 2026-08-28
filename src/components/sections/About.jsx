@@ -8,12 +8,13 @@ export function About() {
           titleId="about-heading"
           eyebrow="About"
           title="Design with intent. Build with precision."
+          subtitle="A Cyprus web design studio crafting premium, SEO-ready websites for local brands and international clients."
         />
         <div className="about__grid">
           <div className="about__prose" data-reveal>
             <p>
-              I don&apos;t build &ldquo;just websites.&rdquo; I create digital experiences that reflect your
-              brand at its best.
+              Based in Cyprus, I don&apos;t build &ldquo;just websites.&rdquo; I create digital experiences
+              that reflect your brand at its best — from Limassol and Nicosia to clients worldwide.
             </p>
             <p>
               I work closely with each project from start to finish — shaping the structure, refining the

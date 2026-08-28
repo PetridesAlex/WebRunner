@@ -34,7 +34,7 @@ export function Footer() {
           />
           <div>
             <p className="footer__name">{site.brand}</p>
-            <p className="footer__tag">Web design & frontend development</p>
+            <p className="footer__tag">Web design &amp; development agency · Cyprus</p>
           </div>
         </div>
         <nav className="footer__nav" aria-label="Footer">

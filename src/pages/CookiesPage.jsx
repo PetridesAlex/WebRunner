@@ -1,23 +1,25 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { Seo } from '../components/Seo'
+import { seo } from '../data/seo'
+import { buildCookiesStructuredData } from '../utils/structuredData'
 import { site } from '../data/site'
 import { Footer } from '../components/layout/Footer'
 import './cookiesPage.css'
 
-const docTitle = 'Cookie policy — WebRunner'
-
 export function CookiesPage() {
   useEffect(() => {
     window.scrollTo(0, 0)
-    const prev = document.title
-    document.title = docTitle
-    return () => {
-      document.title = prev
-    }
   }, [])
 
   return (
     <div className="cookies-page">
+      <Seo
+        title={seo.cookies.title}
+        description={seo.cookies.description}
+        path={seo.cookies.path}
+        structuredData={buildCookiesStructuredData()}
+      />
       <a href="#main" className="cookies-page__skip">
         Skip to content
       </a>

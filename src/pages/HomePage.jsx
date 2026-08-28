@@ -1,5 +1,8 @@
 import { useActiveSection } from '../hooks/useActiveSection'
 import { useReveal } from '../hooks/useReveal'
+import { Seo } from '../components/Seo'
+import { seo } from '../data/seo'
+import { buildHomeStructuredData } from '../utils/structuredData'
 import { Navbar } from '../components/layout/Navbar'
 import { Footer } from '../components/layout/Footer'
 import { BackToTop } from '../components/layout/BackToTop'
@@ -19,6 +22,13 @@ export function HomePage() {
 
   return (
     <>
+      <Seo
+        title={seo.home.title}
+        description={seo.home.description}
+        path={seo.home.path}
+        keywords={seo.home.keywords}
+        structuredData={buildHomeStructuredData()}
+      />
       <div className="noise-overlay" aria-hidden />
       <TopTicker />
       <Navbar activeId={activeId} />

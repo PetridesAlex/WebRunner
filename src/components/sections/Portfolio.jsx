@@ -32,15 +32,21 @@ export function Portfolio() {
 
         {featured.map((p) => (
           <article key={p.id} className={projectCardClass(p, 'project-card project-card--featured')} data-reveal>
-            <a
-              href={p.live}
-              className="project-card__media"
-              aria-label={`${p.title} live demo`}
-              {...externalLinkProps(p.live)}
-            >
-              <img src={p.image} alt="" width={1200} height={750} loading="lazy" />
-              {p.kind === 'saas' && <span className="project-card__saas-badge">SaaS · CRM</span>}
-            </a>
+            {p.live ? (
+              <a
+                href={p.live}
+                className="project-card__media"
+                aria-label={`${p.title} live demo`}
+                {...externalLinkProps(p.live)}
+              >
+                <img src={p.image} alt="" width={1200} height={750} loading="lazy" />
+                {p.kind === 'saas' && <span className="project-card__saas-badge">SaaS · CRM</span>}
+              </a>
+            ) : (
+              <div className="project-card__media project-card__media--static" aria-hidden={false}>
+                <img src={p.image} alt="" width={1200} height={750} loading="lazy" />
+              </div>
+            )}
             <div className="project-card__body">
               <div className="project-card__header-band">
                 <span className="project-card__header-tag">
@@ -58,9 +64,13 @@ export function Portfolio() {
                 ))}
               </ul>
               <div className="project-card__links">
-                <a href={p.live} className="project-card__btn" {...externalLinkProps(p.live)}>
-                  {projectCtaLabel(p)}
-                </a>
+                {p.live ? (
+                  <a href={p.live} className="project-card__btn" {...externalLinkProps(p.live)}>
+                    {projectCtaLabel(p)}
+                  </a>
+                ) : (
+                  <span className="project-card__btn project-card__btn--soon">Studio project</span>
+                )}
               </div>
             </div>
           </article>
@@ -69,15 +79,21 @@ export function Portfolio() {
         <div className="portfolio__grid">
           {rest.map((p) => (
             <article key={p.id} className={projectCardClass(p, 'project-card project-card--compact')} data-reveal>
-              <a
-                href={p.live}
-                className="project-card__media"
-                aria-label={`${p.title} live demo`}
-                {...externalLinkProps(p.live)}
-              >
-                <img src={p.image} alt="" width={800} height={500} loading="lazy" />
-                {p.kind === 'saas' && <span className="project-card__saas-badge">SaaS · CRM</span>}
-              </a>
+              {p.live ? (
+                <a
+                  href={p.live}
+                  className="project-card__media"
+                  aria-label={`${p.title} live demo`}
+                  {...externalLinkProps(p.live)}
+                >
+                  <img src={p.image} alt="" width={800} height={500} loading="lazy" />
+                  {p.kind === 'saas' && <span className="project-card__saas-badge">SaaS · CRM</span>}
+                </a>
+              ) : (
+                <div className="project-card__media project-card__media--static">
+                  <img src={p.image} alt="" width={800} height={500} loading="lazy" />
+                </div>
+              )}
               <div className="project-card__body">
                 <div className="project-card__header-band">
                   <span className="project-card__header-tag">
@@ -95,9 +111,13 @@ export function Portfolio() {
                   ))}
                 </ul>
                 <div className="project-card__links">
-                  <a href={p.live} className="project-card__btn" {...externalLinkProps(p.live)}>
-                    {projectCtaLabel(p)}
-                  </a>
+                  {p.live ? (
+                    <a href={p.live} className="project-card__btn" {...externalLinkProps(p.live)}>
+                      {projectCtaLabel(p)}
+                    </a>
+                  ) : (
+                    <span className="project-card__btn project-card__btn--soon">Studio project</span>
+                  )}
                 </div>
               </div>
             </article>

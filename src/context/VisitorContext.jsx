@@ -1,7 +1,9 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
 
-const STORAGE_ONBOARDING = 'webrunner-onboarding-v1'
+const STORAGE_PORTAL = 'webrunner-portal-v1'
 const STORAGE_VISITOR = 'webrunner-visitor'
+/** @deprecated legacy key — treated as portal unlocked */
+const STORAGE_ONBOARDING_LEGACY = 'webrunner-onboarding-v1'
 
 function normalizeVisitor(o) {
   if (!o || typeof o !== 'object') return null
@@ -45,12 +47,23 @@ export function VisitorProvider({ children }) {
       phone: typeof data?.phone === 'string' ? data.phone : '',
       email: typeof data?.email === 'string' ? data.email : '',
     }
-    sessionStorage.setItem(STORAGE_ONBOARDING, '1')
+    sessionStorage.setItem(STORAGE_PORTAL, '1')
+    sessionStorage.removeItem(STORAGE_ONBOARDING_LEGACY)
     sessionStorage.setItem(STORAGE_VISITOR, JSON.stringify(payload))
     setVisitor(payload)
   }, [])
 
-  const value = useMemo(() => ({ visitor, completeOnboarding }), [visitor, completeOnboarding])
+  const unlockPortal = useCallback(() => {
+    sessionStorage.setItem(STORAGE_PORTAL, '1')
+    sessionStorage.removeItem(STORAGE_ONBOARDING_LEGACY)
+    sessionStorage.removeItem(STORAGE_VISITOR)
+    setVisitor(null)
+  }, [])
+
+  const value = useMemo(
+    () => ({ visitor, completeOnboarding, unlockPortal }),
+    [visitor, completeOnboarding, unlockPortal],
+  )
 
   return <VisitorContext.Provider value={value}>{children}</VisitorContext.Provider>
 }
@@ -63,16 +76,19 @@ export function useVisitor() {
   return ctx
 }
 
-/** Session gate for welcome flow (works before React hydration context updates). */
-export function hasSessionOnboardingDone() {
+/** Session gate for portal (works before React hydration context updates). */
+export function hasSessionPortalUnlocked() {
   if (typeof sessionStorage === 'undefined') return false
-  return sessionStorage.getItem(STORAGE_ONBOARDING) === '1'
+  return (
+    sessionStorage.getItem(STORAGE_PORTAL) === '1' ||
+    sessionStorage.getItem(STORAGE_ONBOARDING_LEGACY) === '1'
+  )
 }
 
 export function getInitialWelcomePhase(pathname) {
-  if (typeof window === 'undefined') return 'loading'
+  if (typeof window === 'undefined') return 'site'
   const p = pathname || window.location.pathname
-  if (p !== '/' && p !== '') return 'loading'
-  if (hasSessionOnboardingDone()) return 'loading'
-  return 'welcome'
+  if (p !== '/' && p !== '') return 'site'
+  if (hasSessionPortalUnlocked()) return 'site'
+  return 'portal'
 }

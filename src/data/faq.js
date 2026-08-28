@@ -1,5 +1,11 @@
 export const faqItems = [
   {
+    id: 'cyprus-web-design',
+    question: 'Do you offer web design and web development in Cyprus?',
+    answer:
+      'Yes. WebRunner is a Cyprus-based web design and web development agency serving businesses in Limassol, Nicosia, Larnaca, Paphos, and across the island — as well as international clients who need a premium, performance-focused website.',
+  },
+  {
     id: 'why-webrunner',
     question: 'Why should I choose WebRunner?',
     answer:

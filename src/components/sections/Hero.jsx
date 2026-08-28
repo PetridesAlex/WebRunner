@@ -179,7 +179,7 @@ export function Hero() {
         <div className="hero__copy">
           <p className="hero__eyebrow" data-reveal>
             <span className="hero__eyebrow-line" />
-            {site.brand} · Digital studio
+            {site.brand} · Cyprus digital studio
           </p>
           {visitorCaption ? (
             <p className="hero__visitor" data-reveal>

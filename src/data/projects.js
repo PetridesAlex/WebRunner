@@ -65,4 +65,30 @@ export const projects = [
     year: '2025',
     kind: 'saas',
   },
+  {
+    id: 'reforge-website',
+    title: 'Reforge',
+    category: 'Website',
+    description:
+      'Performance training studio site for REFORGE — classes, challenges, community, and membership flows for a Limassol fitness brand built to convert.',
+    image: '/cover-clients/reforge-cover.jpg',
+    tech: ['React', 'Next.js', 'Motion'],
+    live: 'https://reforge-website.vercel.app/',
+    featured: false,
+    headerTag: 'Web platform',
+    year: '2026',
+  },
+  {
+    id: 'reforge-mobile',
+    title: 'Reforge App',
+    category: 'Mobile application',
+    description:
+      'Native mobile application for Reforge: polished iOS & Android experience, performance-first UI, and product flows designed for daily engagement.',
+    image: '/cover-clients/reforge-logo.png',
+    tech: ['React Native', 'iOS', 'Android'],
+    live: 'https://reforge-website.vercel.app/',
+    featured: false,
+    headerTag: 'Mobile app',
+    year: '2026',
+  },
 ]

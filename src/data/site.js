@@ -8,12 +8,12 @@ export const site = {
   /** Legal / marketing name — used in FormSubmit notification emails */
   agencyName: 'Webrunner Agency',
   /** Live site URL, no trailing slash (fixes “localhost” in submission emails when testing locally). Override with VITE_SITE_URL if needed */
-  canonicalUrl: envUrl || 'https://webrunneragency.com',
+  canonicalUrl: envUrl || 'https://www.webrunneragency.com',
   name: 'Alex Petrides',
   role: 'Web Designer & Frontend Developer',
   titleLine: 'Websites Built to\nScale.',
   tagline:
-    'We design and build modern websites that help your business grow and stand out online.',
+    'Cyprus web design and development studio — we build fast, SEO-ready websites that help your business grow in Limassol, Nicosia, and beyond.',
   /** Short line under Skills — how you work */
   skillsVoice: 'Your site, built right — together.',
   heroBanner: {
@@ -30,13 +30,13 @@ export const site = {
   /** Hero visual — abstract, keeps focus on headline */
   heroImage: {
     src: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=480&h=800&q=80',
-    alt: '',
+    alt: 'Abstract premium web design visual by WebRunner, Cyprus web development agency',
     width: 260,
     height: 433,
   },
   email: 'info@webrunneragency.com',
   phone: '',
-  location: 'Based in Cyprus · Available worldwide',
+  location: 'Cyprus · Limassol & Nicosia · Available worldwide',
   responseTime: 'Usually replies within 24 hours',
   year: new Date().getFullYear(),
   socials: [{ label: 'GitHub', id: 'github', href: 'https://github.com/PetridesAlex' }],
