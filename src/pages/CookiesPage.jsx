@@ -18,6 +18,7 @@ export function CookiesPage() {
         title={seo.cookies.title}
         description={seo.cookies.description}
         path={seo.cookies.path}
+        noindex={seo.cookies.noindex}
         structuredData={buildCookiesStructuredData()}
       />
       <a href="#main" className="cookies-page__skip">

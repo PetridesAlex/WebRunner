@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom'
 import { site } from '../../data/site'
+import { getServicePages } from '../../data/seoPages'
 
 const socialIcons = {
   github: (
@@ -9,16 +11,18 @@ const socialIcons = {
 }
 
 const quick = [
-  { label: 'About', href: '/#about' },
+  { label: 'About', href: '/about' },
   { label: 'Services', href: '/#services' },
   { label: 'Packages', href: '/#solutions' },
-  { label: 'Work', href: '/#portfolio' },
+  { label: 'Work', href: '/work' },
   { label: 'FAQ', href: '/#faq' },
-  { label: 'Contact', href: '/#contact' },
+  { label: 'Contact', href: '/contact' },
   { label: 'Cookies', href: '/cookies' },
 ]
 
 export function Footer() {
+  const serviceLinks = getServicePages()
+
   return (
     <footer className="footer">
       <div className="footer__inner">
@@ -38,10 +42,23 @@ export function Footer() {
           </div>
         </div>
         <nav className="footer__nav" aria-label="Footer">
-          {quick.map((l) => (
-            <a key={l.href} href={l.href}>
-              {l.label}
-            </a>
+          {quick.map((l) =>
+            l.href.startsWith('/') && !l.href.includes('#') ? (
+              <Link key={l.href} to={l.href}>
+                {l.label}
+              </Link>
+            ) : (
+              <a key={l.href} href={l.href}>
+                {l.label}
+              </a>
+            ),
+          )}
+        </nav>
+        <nav className="footer__nav footer__nav--services" aria-label="Services">
+          {serviceLinks.map((s) => (
+            <Link key={s.path} to={s.path}>
+              {s.serviceName}
+            </Link>
           ))}
         </nav>
         <div className="footer__social">

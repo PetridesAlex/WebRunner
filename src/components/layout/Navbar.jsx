@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { site } from '../../data/site'
 import { Button } from '../ui/Button'
 import { TelegramIcon } from '../icons/TelegramIcon'
@@ -39,6 +40,10 @@ const navLinks = [
 
 export function Navbar({ activeId }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { pathname } = useLocation()
+  const onHome = pathname === '/'
+
+  const sectionHref = (id) => (onHome ? `#${id}` : `/#${id}`)
 
   const closeMenu = () => setMenuOpen(false)
 
@@ -64,7 +69,7 @@ export function Navbar({ activeId }) {
   return (
     <header className={`nav-wrap${menuOpen ? ' nav-wrap--menu-open' : ''}`}>
       <nav className="nav" aria-label="Primary">
-        <a className="nav__brand" href="#hero" aria-label={`${site.brand} home`} onClick={closeMenu}>
+        <Link to="/" className="nav__brand" aria-label={`${site.brand} home`} onClick={closeMenu}>
           <img
             className="nav__brand-icon"
             src="/webrunner-icon.svg"
@@ -77,7 +82,7 @@ export function Navbar({ activeId }) {
             <span className="nav__brand-name">{site.brand}</span>
             <span className="nav__brand-badge">Agency</span>
           </span>
-        </a>
+        </Link>
 
         <button
           type="button"
@@ -118,7 +123,7 @@ export function Navbar({ activeId }) {
             {navLinks.map(({ id, label }) => (
               <li key={id}>
                 <a
-                  href={`#${id}`}
+                  href={sectionHref(id)}
                   className={activeId === id ? 'nav__link nav__link--active' : 'nav__link'}
                   onClick={closeMenu}
                 >
@@ -127,7 +132,7 @@ export function Navbar({ activeId }) {
               </li>
             ))}
             <li className="nav__links-cta">
-              <Button href="#contact" className="btn--sm nav__drawer-cta" onClick={closeMenu}>
+              <Button href={onHome ? '#contact' : '/contact'} className="btn--sm nav__drawer-cta" onClick={closeMenu}>
                 Start a project
               </Button>
             </li>
@@ -152,7 +157,7 @@ export function Navbar({ activeId }) {
           </ul>
         </div>
 
-        <Button href="#contact" className="nav__cta btn--sm">
+        <Button href={onHome ? '#contact' : '/contact'} className="nav__cta btn--sm">
           Start a project
         </Button>
       </nav>

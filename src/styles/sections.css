@@ -6422,3 +6422,51 @@
   transform: translateY(-3px);
   border-color: rgba(201, 168, 124, 0.35);
 }
+
+/* SEO internal links — additive only */
+.service-card__more {
+  display: inline-block;
+  margin-top: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent-bright);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.service-card__more:hover {
+  color: var(--text);
+  border-bottom-color: var(--border-accent);
+}
+
+.services__seo-links {
+  margin: var(--space-10) 0 0;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.services__seo-links a {
+  color: var(--accent-bright);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.services__seo-links a:hover {
+  color: var(--text);
+  border-bottom-color: var(--border-accent);
+}
+
+.footer__nav--services {
+  max-width: 36rem;
+}
+
+.footer__nav--services a {
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+}

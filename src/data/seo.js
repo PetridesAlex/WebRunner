@@ -12,19 +12,18 @@ export const seo = {
   twitterHandle: '@webrunner_agency',
 
   home: {
-    title: 'Web Design & Web Development Agency Cyprus | WebRunner',
+    title: 'WebRunner Agency | Web Design & Software Development Cyprus',
     description:
-      'WebRunner is a Cyprus web design and web development agency building fast, SEO-optimized websites for businesses in Limassol, Nicosia, and worldwide. Custom business sites, landing pages, and eCommerce.',
+      'WebRunner Agency is a web and software development agency in Limassol, Cyprus, building modern websites, mobile apps, e-commerce platforms, CRM systems and custom business software.',
     keywords: [
       'web design Cyprus',
       'web development agency Cyprus',
       'website designer Cyprus',
       'web developer Limassol',
-      'web design Nicosia',
-      'website development Cyprus',
-      'custom website Cyprus',
-      'professional web design',
-      'React web development',
+      'software development Cyprus',
+      'mobile app development Cyprus',
+      'e-commerce Cyprus',
+      'CRM development Cyprus',
       'WebRunner',
     ].join(', '),
     path: '/',
@@ -35,6 +34,7 @@ export const seo = {
     description:
       'How WebRunner uses cookies on webrunneragency.com. Learn about analytics, preferences, and your privacy choices.',
     path: '/cookies',
+    noindex: true,
   },
 
   business: {
@@ -47,9 +47,12 @@ export const seo = {
     serviceTypes: [
       'Web Design',
       'Web Development',
-      'Website Design',
-      'Landing Page Design',
-      'eCommerce Development',
+      'Mobile App Development',
+      'E-commerce Development',
+      'CRM Development',
+      'Custom Software Development',
+      'Business Automation',
+      'API Integrations',
       'Website Redesign',
       'SEO-Friendly Website Development',
     ],
