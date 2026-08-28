@@ -40,12 +40,21 @@ const navLinks = [
 
 export function Navbar({ activeId }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isMobileNav, setIsMobileNav] = useState(false)
   const { pathname } = useLocation()
   const onHome = pathname === '/'
 
   const sectionHref = (id) => (onHome ? `#${id}` : `/#${id}`)
 
   const closeMenu = () => setMenuOpen(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 1024px)')
+    const syncNavMode = () => setIsMobileNav(mq.matches)
+    syncNavMode()
+    mq.addEventListener('change', syncNavMode)
+    return () => mq.removeEventListener('change', syncNavMode)
+  }, [])
 
   useEffect(() => {
     const onKey = (e) => {
@@ -56,7 +65,7 @@ export function Navbar({ activeId }) {
   }, [])
 
   useEffect(() => {
-    if (menuOpen) {
+    if (isMobileNav && menuOpen) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
@@ -64,7 +73,11 @@ export function Navbar({ activeId }) {
     return () => {
       document.body.style.overflow = ''
     }
-  }, [menuOpen])
+  }, [isMobileNav, menuOpen])
+
+  useEffect(() => {
+    if (!isMobileNav && menuOpen) setMenuOpen(false)
+  }, [isMobileNav, menuOpen])
 
   return (
     <header className={`nav-wrap${menuOpen ? ' nav-wrap--menu-open' : ''}`}>
@@ -89,7 +102,7 @@ export function Navbar({ activeId }) {
           className="nav__menu-toggle"
           aria-expanded={menuOpen}
           aria-controls="primary-navigation"
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-label="Menu"
           onClick={() => setMenuOpen((o) => !o)}
         >
           <span className="nav__menu-bars" aria-hidden>
@@ -99,26 +112,21 @@ export function Navbar({ activeId }) {
           </span>
         </button>
 
-        <div
-          className="nav__backdrop"
-          aria-hidden="true"
-          onClick={closeMenu}
-        />
+        <div className="nav__backdrop" aria-hidden="true" onClick={closeMenu} />
 
         <div
           id="primary-navigation"
           className="nav__drawer"
-          role="dialog"
-          {...(menuOpen ? { 'aria-modal': true } : {})}
-          aria-labelledby="nav-drawer-title"
-          aria-hidden={!menuOpen}
-          inert={!menuOpen ? true : undefined}
+          {...(isMobileNav
+            ? {
+                role: 'dialog',
+                'aria-label': 'Primary navigation menu',
+                ...(menuOpen ? { 'aria-modal': true } : {}),
+                'aria-hidden': !menuOpen,
+                inert: !menuOpen ? true : undefined,
+              }
+            : {})}
         >
-          <div className="nav__drawer-header">
-            <h2 id="nav-drawer-title" className="nav__drawer-title">
-              Menu
-            </h2>
-          </div>
           <ul className="nav__drawer-list">
             {navLinks.map(({ id, label }) => (
               <li key={id}>
