@@ -85,8 +85,17 @@ export function hasSessionPortalUnlocked() {
   )
 }
 
+/** Search / social bots should never see the portal gate (empty-looking shell). */
+export function isSearchOrPreviewBot() {
+  if (typeof navigator === 'undefined') return false
+  return /Googlebot|Google-InspectionTool|Bingbot|Slurp|DuckDuckBot|Baiduspider|YandexBot|facebookexternalhit|Facebot|Twitterbot|LinkedInBot|Applebot|SemrushBot|AhrefsBot/i.test(
+    navigator.userAgent || '',
+  )
+}
+
 export function getInitialWelcomePhase(pathname) {
   if (typeof window === 'undefined') return 'site'
+  if (isSearchOrPreviewBot()) return 'site'
   const p = pathname || window.location.pathname
   if (p !== '/' && p !== '') return 'site'
   if (hasSessionPortalUnlocked()) return 'site'

@@ -44,6 +44,8 @@ writeFileSync(join(root, 'public/robots.txt'), robots, 'utf8')
 
 const vercelPath = join(root, 'vercel.json')
 const vercel = JSON.parse(readFileSync(vercelPath, 'utf8'))
+// Fallback only: post-build generate-route-html.mjs writes dist/<route>/index.html
+// which Vercel serves first. These rewrites cover any missing SPA path.
 vercel.rewrites = SPA_ROUTES.map((path) => ({
   source: path,
   destination: '/index.html',
