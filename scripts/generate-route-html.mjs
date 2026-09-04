@@ -15,6 +15,9 @@ const defaultImage = `${base}/brand/webrunner-hero-screenshot.png`
 
 const { INDEXABLE_PAGES } = await import(pathToFileURL(join(root, 'src/data/seoPages.js')).href)
 
+// Only homepage (+ cookies) get static HTML. Other SEO paths 301 to `/` on Vercel.
+const pagesToRender = INDEXABLE_PAGES.filter((p) => p.path === '/')
+
 const EXTRA_PAGES = [
   {
     path: '/cookies',
@@ -186,7 +189,7 @@ if (!existsSync(join(dist, 'index.html'))) {
 }
 
 const template = readFileSync(join(dist, 'index.html'), 'utf8')
-const pages = [...INDEXABLE_PAGES, ...EXTRA_PAGES]
+const pages = [...pagesToRender, ...EXTRA_PAGES]
 const written = pages.map((page) => writeRouteHtml(page, template))
 
 console.log(`Generated ${written.length} crawlable HTML routes in dist/`)

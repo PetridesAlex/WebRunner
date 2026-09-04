@@ -1,19 +1,14 @@
 import { useEffect, useState } from 'react'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { PortalGate } from './components/PortalGate'
 import { VisitorProvider, useVisitor, getInitialWelcomePhase } from './context/VisitorContext'
-import { SeoLandingPage } from './components/seo/SeoLandingPage'
 import { HomePage } from './pages/HomePage'
 import { CookiesPage } from './pages/CookiesPage'
-import { WorkPage } from './pages/WorkPage'
-import { AboutPage } from './pages/AboutPage'
-import { ContactPage } from './pages/ContactPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { CookieBanner } from './components/CookieBanner'
-import { getServicePages } from './data/seoPages'
+import { REDIRECT_TO_HOME_ROUTES } from './data/seoPages'
 
 const THEME_STORAGE_KEY = 'webrunner-theme'
-const servicePages = getServicePages()
 
 function AppRoutes() {
   const [theme, setTheme] = useState('dark')
@@ -67,11 +62,8 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/cookies" element={<CookiesPage />} />
-        <Route path="/work" element={<WorkPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        {servicePages.map((page) => (
-          <Route key={page.path} path={page.path} element={<SeoLandingPage page={page} />} />
+        {REDIRECT_TO_HOME_ROUTES.map((path) => (
+          <Route key={path} path={path} element={<Navigate to="/" replace />} />
         ))}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

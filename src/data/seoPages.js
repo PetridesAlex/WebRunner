@@ -406,11 +406,11 @@ export const INDEXABLE_PAGES = [
   },
 ]
 
-/** Routes that should SPA-rewrite to index.html on Vercel (includes noindex utility pages). */
-export const SPA_ROUTES = [
-  ...INDEXABLE_PAGES.filter((p) => p.path !== '/').map((p) => p.path),
-  '/cookies',
-]
+/** Routes that should SPA-rewrite to index.html on Vercel (utility pages only). */
+export const SPA_ROUTES = ['/cookies']
+
+/** Former SEO landing paths — permanently redirect to homepage so Google results land on `/`. */
+export const REDIRECT_TO_HOME_ROUTES = INDEXABLE_PAGES.filter((p) => p.path !== '/').map((p) => p.path)
 
 export function getPageBySlug(slug) {
   return INDEXABLE_PAGES.find((p) => p.slug === slug)
@@ -429,6 +429,7 @@ export function getServicePages() {
   return INDEXABLE_PAGES.filter((p) => p.kind === 'service')
 }
 
+/** Only the homepage is submitted in the sitemap (subpages redirect to `/`). */
 export function getSitemapEntries() {
-  return INDEXABLE_PAGES.filter((p) => p.inSitemap !== false)
+  return INDEXABLE_PAGES.filter((p) => p.path === '/')
 }

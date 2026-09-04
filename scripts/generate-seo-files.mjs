@@ -6,7 +6,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = join(__dirname, '..')
 const base = (process.env.VITE_SITE_URL || 'https://www.webrunneragency.com').replace(/\/$/, '')
 
-const { getSitemapEntries, SPA_ROUTES } = await import(
+const { getSitemapEntries, SPA_ROUTES, REDIRECT_TO_HOME_ROUTES } = await import(
   pathToFileURL(join(root, 'src/data/seoPages.js')).href
 )
 
@@ -44,12 +44,21 @@ writeFileSync(join(root, 'public/robots.txt'), robots, 'utf8')
 
 const vercelPath = join(root, 'vercel.json')
 const vercel = JSON.parse(readFileSync(vercelPath, 'utf8'))
-// Fallback only: post-build generate-route-html.mjs writes dist/<route>/index.html
-// which Vercel serves first. These rewrites cover any missing SPA path.
+
+// Google-indexed subpaths permanently redirect to the homepage.
+vercel.redirects = REDIRECT_TO_HOME_ROUTES.flatMap((path) => [
+  { source: path, destination: '/', permanent: true },
+  { source: `${path}/`, destination: '/', permanent: true },
+])
+
+// Cookies stays as a real page (noindex).
 vercel.rewrites = SPA_ROUTES.map((path) => ({
   source: path,
   destination: '/index.html',
 }))
+
 writeFileSync(vercelPath, `${JSON.stringify(vercel, null, 2)}\n`, 'utf8')
 
-console.log(`SEO files generated for ${base} (${urlBlocks.length} sitemap URLs, ${SPA_ROUTES.length} SPA rewrites)`)
+console.log(
+  `SEO files generated for ${base} (${urlBlocks.length} sitemap URLs, ${REDIRECT_TO_HOME_ROUTES.length} home redirects, ${SPA_ROUTES.length} SPA rewrites)`,
+)

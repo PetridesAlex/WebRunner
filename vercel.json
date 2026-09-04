@@ -2,46 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
-      "source": "/web-development",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/mobile-app-development",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/ecommerce-development",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/custom-software-development",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/crm-development",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/business-automation",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/api-integrations",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/work",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/about",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/contact",
-      "destination": "/index.html"
-    },
-    {
       "source": "/cookies",
       "destination": "/index.html"
     }
@@ -82,6 +42,108 @@
           "value": "public, max-age=0, must-revalidate, s-maxage=0"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/web-development",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/web-development/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/mobile-app-development",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/mobile-app-development/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/ecommerce-development",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/ecommerce-development/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/custom-software-development",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/custom-software-development/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/crm-development",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/crm-development/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/business-automation",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/business-automation/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/api-integrations",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/api-integrations/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/work",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/work/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/contact/",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }

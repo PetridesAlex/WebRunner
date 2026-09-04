@@ -11,12 +11,12 @@ const socialIcons = {
 }
 
 const quick = [
-  { label: 'About', href: '/about' },
+  { label: 'About', href: '/#about' },
   { label: 'Services', href: '/#services' },
   { label: 'Packages', href: '/#solutions' },
-  { label: 'Work', href: '/work' },
+  { label: 'Work', href: '/#portfolio' },
   { label: 'FAQ', href: '/#faq' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Contact', href: '/#contact' },
   { label: 'Cookies', href: '/cookies' },
 ]
 
@@ -56,9 +56,9 @@ export function Footer() {
         </nav>
         <nav className="footer__nav footer__nav--services" aria-label="Services">
           {serviceLinks.map((s) => (
-            <Link key={s.path} to={s.path}>
+            <a key={s.path} href="/#services">
               {s.serviceName}
-            </Link>
+            </a>
           ))}
         </nav>
         <div className="footer__social">

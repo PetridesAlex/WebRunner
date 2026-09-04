@@ -140,7 +140,7 @@ export function Navbar({ activeId }) {
               </li>
             ))}
             <li className="nav__links-cta">
-              <Button href={onHome ? '#contact' : '/contact'} className="btn--sm nav__drawer-cta" onClick={closeMenu}>
+              <Button href={onHome ? '#contact' : '/#contact'} className="btn--sm nav__drawer-cta" onClick={closeMenu}>
                 Start a project
               </Button>
             </li>
@@ -165,7 +165,7 @@ export function Navbar({ activeId }) {
           </ul>
         </div>
 
-        <Button href={onHome ? '#contact' : '/contact'} className="nav__cta btn--sm">
+        <Button href={onHome ? '#contact' : '/#contact'} className="nav__cta btn--sm">
           Start a project
         </Button>
       </nav>

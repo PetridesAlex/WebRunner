@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { Seo } from '../components/Seo'
 import { SiteChrome } from '../components/layout/SiteChrome'
 import { Button } from '../components/ui/Button'
@@ -25,12 +24,12 @@ export function NotFoundPage() {
               <Button href="/" variant="primary">
                 Back to homepage
               </Button>
-              <Button href="/contact" variant="ghost">
+              <Button href="/#contact" variant="ghost">
                 Contact us
               </Button>
-              <Link to="/web-development" className="btn btn--ghost">
-                Web development
-              </Link>
+              <Button href="/#services" variant="ghost">
+                Our services
+              </Button>
             </div>
           </div>
         </header>
