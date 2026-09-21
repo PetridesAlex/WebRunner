@@ -29,6 +29,11 @@ function AppRoutes() {
   }, [theme])
 
   useEffect(() => {
+    // Keep portal phase in sync if the user lands on `/` with a fresh session.
+    setPhase(getInitialWelcomePhase(location.pathname))
+  }, [location.pathname])
+
+  useEffect(() => {
     if (!location.hash) {
       window.scrollTo(0, 0)
     }
@@ -65,6 +70,7 @@ function AppRoutes() {
         {REDIRECT_TO_HOME_ROUTES.map((path) => (
           <Route key={path} path={path} element={<Navigate to="/" replace />} />
         ))}
+        {/* Only match true unknown paths — never flash 404 during boot */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <CookieBanner visibleAfterPreload />

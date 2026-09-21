@@ -103,7 +103,7 @@ ${h1}
 ${lead}
 <p>${escapeHtml(page.description)}</p>
 ${sections}
-<p><a href="/contact">Start a project</a> · <a href="/">WebRunner Agency home</a> · <a href="/work">Selected work</a></p>
+<p><a href="/#contact">Start a project</a> · <a href="/">WebRunner Agency home</a> · <a href="/#portfolio">Selected work</a></p>
 <p>WebRunner Agency · Limassol, Cyprus · <a href="mailto:info@webrunneragency.com">info@webrunneragency.com</a></p>
 </main>`
 }
@@ -161,11 +161,13 @@ function applyPageMeta(html, page) {
   }
 
   const body = buildCrawlableBody(page)
-  if (/<div id="root">[\s\S]*?<\/div>\s*<script/i.test(next)) {
-    next = next.replace(/<div id="root">[\s\S]*?<\/div>(\s*<script)/i, `<div id="root">${body}</div>$1`)
-  } else {
-    next = next.replace(/<div id="root"><\/div>/i, `<div id="root">${body}</div>`)
-  }
+  // Keep #root empty so first paint is the dark boot shell / React portal — not unstyled SEO HTML.
+  next = next.replace(/<div id="root">[\s\S]*?<\/div>/i, '<div id="root"></div>')
+  next = next.replace(/<noscript id="webrunner-seo-fallback">[\s\S]*?<\/noscript>\s*/i, '')
+  next = next.replace(
+    /(<div id="root"><\/div>)/i,
+    `$1\n    <noscript id="webrunner-seo-fallback">${body}</noscript>`,
+  )
 
   return next
 }
