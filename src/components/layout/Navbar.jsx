@@ -33,6 +33,7 @@ const navLinks = [
   { id: 'skills', label: 'Skills' },
   { id: 'services', label: 'Services' },
   { id: 'solutions', label: 'Packages' },
+  { id: 'mobile', label: 'Apps' },
   { id: 'portfolio', label: 'Work' },
   { id: 'faq', label: 'FAQ' },
   { id: 'contact', label: 'Contact' },

@@ -6,6 +6,7 @@ const SECTION_IDS = [
   'skills',
   'services',
   'solutions',
+  'mobile',
   'portfolio',
   'faq',
   'journey',

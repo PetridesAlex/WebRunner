@@ -41,4 +41,11 @@ export const services = [
       'High-performance online stores built to scale - combining seamless shopping experiences, modern design, and conversion-driven structure.',
     icon: 'cart',
   },
+  {
+    id: '07',
+    title: 'Mobile App Development',
+    description:
+      'Native-feeling iOS and Android apps with polished UI, performance-first architecture, and product flows designed for daily engagement.',
+    icon: 'phone',
+  },
 ]

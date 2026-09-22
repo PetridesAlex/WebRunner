@@ -11,6 +11,7 @@ import { About } from '../components/sections/About'
 import { Skills } from '../components/sections/Skills'
 import { Services } from '../components/sections/Services'
 import { WebsiteSolutions } from '../components/sections/WebsiteSolutions'
+import { MobileProcess } from '../components/sections/MobileProcess'
 import { Portfolio } from '../components/sections/Portfolio'
 import { FAQSection } from '../components/sections/FAQSection'
 import { Contact } from '../components/sections/Contact'
@@ -38,6 +39,7 @@ export function HomePage() {
         <Skills />
         <Services />
         <WebsiteSolutions />
+        <MobileProcess />
         <Portfolio />
         <FAQSection />
         <Contact />

@@ -67,6 +67,12 @@ const icons = {
       <path d="M3 4h2l2.2 10.5a1 1 0 001 .8h7.9a1 1 0 001-.8L20 8H7" />
     </svg>
   ),
+  phone: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+      <rect x="7" y="2" width="10" height="20" rx="2.5" />
+      <path d="M10 5h4M11 19h2" strokeLinecap="round" />
+    </svg>
+  ),
 }
 
 export function ServiceIcon({ name }) {
