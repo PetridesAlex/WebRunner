@@ -11,11 +11,11 @@ const socialIcons = {
 }
 
 const quick = [
+  { label: 'Work', href: '/#work' },
   { label: 'About', href: '/#about' },
   { label: 'Services', href: '/#services' },
   { label: 'Packages', href: '/#solutions' },
   { label: 'Apps', href: '/#mobile' },
-  { label: 'Work', href: '/#portfolio' },
   { label: 'FAQ', href: '/#faq' },
   { label: 'Contact', href: '/#contact' },
   { label: 'Cookies', href: '/cookies' },

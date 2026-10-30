@@ -4,7 +4,7 @@ import { Button } from '../ui/Button'
 
 export function FAQSection() {
   return (
-    <section id="faq" className="faq section" aria-labelledby="faq-heading" data-reveal-section>
+    <section id="faq" className="faq section section--editorial" aria-labelledby="faq-heading" data-reveal-section>
       <div className="faq__bg" aria-hidden />
       <div className="section__container faq__container">
         <SectionHeader

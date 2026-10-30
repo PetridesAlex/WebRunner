@@ -9,7 +9,7 @@ export function WebsiteSolutions() {
   const footnoteBody = footnoteRest.join('\n')
 
   return (
-    <section id="solutions" className="solutions section section--solutions" aria-labelledby="solutions-heading" data-reveal-section>
+    <section id="solutions" className="solutions section section--solutions section--editorial" aria-labelledby="solutions-heading" data-reveal-section>
       <div className="solutions__ambient" aria-hidden />
       <div className="section__container">
         <SectionHeader

@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { site } from '../../data/site'
 import { Button } from '../ui/Button'
 import { TelegramIcon } from '../icons/TelegramIcon'
+import { useNavMenu } from '../../context/NavMenuContext'
 
 function MessengerIcon({ id }) {
   const cls = 'nav__drawer-social-icon'
@@ -28,34 +29,22 @@ function MessengerIcon({ id }) {
 }
 
 const navLinks = [
-  { id: 'hero', label: 'Home' },
+  { id: 'work', label: 'Work' },
   { id: 'about', label: 'About' },
-  { id: 'skills', label: 'Skills' },
   { id: 'services', label: 'Services' },
   { id: 'solutions', label: 'Packages' },
   { id: 'mobile', label: 'Apps' },
-  { id: 'portfolio', label: 'Work' },
   { id: 'faq', label: 'FAQ' },
   { id: 'contact', label: 'Contact' },
 ]
 
 export function Navbar({ activeId }) {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [isMobileNav, setIsMobileNav] = useState(false)
+  const { menuOpen, setMenuOpen, closeMenu, toggleMenu } = useNavMenu()
   const { pathname } = useLocation()
   const onHome = pathname === '/'
+  const overWork = activeId === 'work'
 
   const sectionHref = (id) => (onHome ? `#${id}` : `/#${id}`)
-
-  const closeMenu = () => setMenuOpen(false)
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 1024px)')
-    const syncNavMode = () => setIsMobileNav(mq.matches)
-    syncNavMode()
-    mq.addEventListener('change', syncNavMode)
-    return () => mq.removeEventListener('change', syncNavMode)
-  }, [])
 
   useEffect(() => {
     const onKey = (e) => {
@@ -63,10 +52,10 @@ export function Navbar({ activeId }) {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [])
+  }, [setMenuOpen])
 
   useEffect(() => {
-    if (isMobileNav && menuOpen) {
+    if (menuOpen) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
@@ -74,59 +63,48 @@ export function Navbar({ activeId }) {
     return () => {
       document.body.style.overflow = ''
     }
-  }, [isMobileNav, menuOpen])
-
-  useEffect(() => {
-    if (!isMobileNav && menuOpen) setMenuOpen(false)
-  }, [isMobileNav, menuOpen])
+  }, [menuOpen])
 
   return (
-    <header className={`nav-wrap${menuOpen ? ' nav-wrap--menu-open' : ''}`}>
-      <nav className="nav" aria-label="Primary">
+    <header
+      className={`nav-wrap nav-wrap--editorial${menuOpen ? ' nav-wrap--menu-open' : ''}${
+        overWork ? ' nav-wrap--over-work' : ''
+      }`}
+    >
+      <nav className="nav nav--editorial" aria-label="Primary">
         <Link to="/" className="nav__brand" aria-label={`${site.brand} home`} onClick={closeMenu}>
-          <img
-            className="nav__brand-icon"
-            src="/webrunner-icon.svg"
-            alt=""
-            width={48}
-            height={48}
-            decoding="async"
-          />
           <span className="nav__brand-wordmark">
             <span className="nav__brand-name">{site.brand}</span>
-            <span className="nav__brand-badge">Agency</span>
           </span>
         </Link>
 
-        <button
-          type="button"
-          className="nav__menu-toggle"
-          aria-expanded={menuOpen}
-          aria-controls="primary-navigation"
-          aria-label="Menu"
-          onClick={() => setMenuOpen((o) => !o)}
-        >
-          <span className="nav__menu-bars" aria-hidden>
-            <span className="nav__menu-bar" />
-            <span className="nav__menu-bar" />
-            <span className="nav__menu-bar" />
-          </span>
-        </button>
+        {(!overWork || menuOpen) && (
+          <button
+            type="button"
+            className="nav__menu-toggle"
+            aria-expanded={menuOpen}
+            aria-controls="primary-navigation"
+            aria-label={menuOpen ? 'Close menu' : 'Menu'}
+            onClick={toggleMenu}
+          >
+            <span className="nav__menu-label">{menuOpen ? 'Close' : 'Menu'}</span>
+            <span className="nav__menu-bars" aria-hidden>
+              <span className="nav__menu-bar" />
+              <span className="nav__menu-bar" />
+            </span>
+          </button>
+        )}
 
         <div className="nav__backdrop" aria-hidden="true" onClick={closeMenu} />
 
         <div
           id="primary-navigation"
           className="nav__drawer"
-          {...(isMobileNav
-            ? {
-                role: 'dialog',
-                'aria-label': 'Primary navigation menu',
-                ...(menuOpen ? { 'aria-modal': true } : {}),
-                'aria-hidden': !menuOpen,
-                inert: !menuOpen ? true : undefined,
-              }
-            : {})}
+          role="dialog"
+          aria-label="Primary navigation menu"
+          {...(menuOpen ? { 'aria-modal': true } : {})}
+          aria-hidden={!menuOpen}
+          inert={!menuOpen ? true : undefined}
         >
           <ul className="nav__drawer-list">
             {navLinks.map(({ id, label }) => (
@@ -165,10 +143,6 @@ export function Navbar({ activeId }) {
             </li>
           </ul>
         </div>
-
-        <Button href={onHome ? '#contact' : '/#contact'} className="nav__cta btn--sm">
-          Start a project
-        </Button>
       </nav>
     </header>
   )

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { PortalGate } from './components/PortalGate'
 import { VisitorProvider, useVisitor, getInitialWelcomePhase } from './context/VisitorContext'
+import { NavMenuProvider } from './context/NavMenuContext'
 import { HomePage } from './pages/HomePage'
 import { CookiesPage } from './pages/CookiesPage'
 import { NotFoundPage } from './pages/NotFoundPage'
@@ -81,9 +82,11 @@ function AppRoutes() {
 export default function App() {
   return (
     <VisitorProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <NavMenuProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </NavMenuProvider>
     </VisitorProvider>
   )
 }

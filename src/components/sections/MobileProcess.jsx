@@ -184,7 +184,7 @@ export function MobileProcess() {
   return (
     <section
       id="mobile"
-      className="mobile-process section section--mobile"
+      className="mobile-process section section--mobile section--editorial"
       aria-labelledby="mobile-heading"
       data-reveal-section
     >

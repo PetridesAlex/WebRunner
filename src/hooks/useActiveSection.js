@@ -1,20 +1,17 @@
 import { useState, useEffect } from 'react'
 
 const SECTION_IDS = [
-  'hero',
+  'work',
   'about',
-  'skills',
   'services',
   'solutions',
   'mobile',
-  'portfolio',
   'faq',
-  'journey',
   'contact',
 ]
 
 export function useActiveSection() {
-  const [activeId, setActiveId] = useState('hero')
+  const [activeId, setActiveId] = useState('work')
 
   useEffect(() => {
     const sections = SECTION_IDS.map((id) => document.getElementById(id)).filter(Boolean)

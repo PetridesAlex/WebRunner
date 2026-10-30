@@ -1,29 +1,32 @@
 import { services } from '../../data/services'
 import { SectionHeader } from '../ui/SectionHeader'
-import { ServiceIcon } from './ServiceIcon'
 
 export function Services() {
   return (
-    <section id="services" className="services section section--services" aria-labelledby="services-heading" data-reveal-section>
+    <section
+      id="services"
+      className="services section section--services section--editorial"
+      aria-labelledby="services-heading"
+      data-reveal-section
+    >
       <div className="section__container">
         <SectionHeader
           titleId="services-heading"
           eyebrow="Services"
-          title="Web solutions built for real growth"
-          subtitle="Web design and development for Cyprus businesses and global brands — from strategic business sites to high-performance stores built to attract, convert, and scale."
+          title="What we build"
+          subtitle="Web, commerce, and mobile — engineered for clarity, speed, and growth."
         />
-        <div className="services__grid">
+        <ol className="services__strip">
           {services.map((s) => (
-            <article key={s.id} className="service-card" data-reveal>
-              <div className="service-card__top">
-                <span className="service-card__index">{s.id}</span>
-                <ServiceIcon name={s.icon} />
+            <li key={s.id} className="services__strip-item" data-reveal>
+              <span className="services__strip-index">{s.id}</span>
+              <div className="services__strip-body">
+                <h3 className="services__strip-title">{s.title}</h3>
+                <p className="services__strip-desc">{s.description}</p>
               </div>
-              <h3 className="service-card__title">{s.title}</h3>
-              <p className="service-card__desc">{s.description}</p>
-            </article>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   )

@@ -93,7 +93,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="contact section section--contact" aria-labelledby="contact-heading" data-reveal-section>
+    <section id="contact" className="contact section section--contact section--editorial" aria-labelledby="contact-heading" data-reveal-section>
       <div className="section__container">
         <div className="contact__layout">
           <div className="contact__intro">
