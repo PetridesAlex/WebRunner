@@ -3,6 +3,7 @@ import { seo } from '../data/seo'
 import { buildHomeStructuredData } from '../utils/structuredData'
 import { WorkCarousel } from '../components/sections/WorkCarousel'
 import { LandingMenu } from '../components/layout/LandingMenu'
+import { TelegramFloat } from '../components/layout/TelegramFloat'
 import { OfferModal } from '../components/ui/OfferModal'
 import { OfferModalProvider } from '../context/OfferModalContext'
 
@@ -21,6 +22,7 @@ export function HomePage() {
       <main className="landing-main">
         <WorkCarousel />
       </main>
+      <TelegramFloat />
       <OfferModal />
     </OfferModalProvider>
   )

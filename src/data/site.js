@@ -35,12 +35,12 @@ export const site = {
     height: 433,
   },
   email: 'info@webrunneragency.com',
-  phone: '',
+  phone: '+357 97866884',
   location: 'Cyprus · Limassol & Nicosia · Available worldwide',
   responseTime: 'Usually replies within 24 hours',
   year: new Date().getFullYear(),
   socials: [{ label: 'GitHub', id: 'github', href: 'https://github.com/PetridesAlex' }],
-  /** Mobile drawer — set your real profile URLs */
+  /** Mobile drawer / floating contact — Telegram opens a direct chat */
   messengerLinks: [
     { id: 'telegram', label: 'Telegram', href: 'https://t.me/+35797866884' },
     { id: 'whatsapp', label: 'WhatsApp', href: 'https://wa.me/35797866884' },
