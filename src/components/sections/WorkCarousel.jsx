@@ -8,32 +8,91 @@ import { site } from '../../data/site'
 
 function BrandMark() {
   const reduced = useReducedMotion()
+  const letters = site.brand.split('')
 
   return (
     <motion.span
       className="work-chrome__brand"
-      initial={reduced ? false : { opacity: 0, y: -10, filter: 'blur(6px)' }}
+      initial={reduced ? false : { opacity: 0, y: -12, filter: 'blur(8px)' }}
       animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      transition={reduced ? { duration: 0 } : { duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      transition={reduced ? { duration: 0 } : { duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
     >
       <span className="work-chrome__mark-wrap" aria-hidden>
+        <span className="work-chrome__mark-glow" />
         <span className="work-chrome__mark-ring" />
+        <span className="work-chrome__mark-ring work-chrome__mark-ring--echo" />
         <motion.img
           className="work-chrome__mark"
           src="/webrunner-icon.svg"
           alt=""
-          width={36}
-          height={36}
+          width={48}
+          height={48}
           decoding="async"
-          animate={reduced ? undefined : { rotate: [0, 8, 0] }}
-          transition={reduced ? undefined : { duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          animate={
+            reduced
+              ? undefined
+              : {
+                  rotate: [0, 6, 0, -4, 0],
+                  scale: [1, 1.04, 1, 1.02, 1],
+                }
+          }
+          transition={
+            reduced ? undefined : { duration: 10, repeat: Infinity, ease: 'easeInOut' }
+          }
         />
       </span>
-      <span className="work-chrome__wordmark">
-        <span className="work-chrome__name">{site.brand}</span>
-        <span className="work-chrome__agency">Agency</span>
+      <span className="work-chrome__wordmark work-chrome__wordmark--header">
+        <span className="work-chrome__name" aria-label={site.brand}>
+          {letters.map((char, i) => (
+            <motion.span
+              key={`${char}-${i}`}
+              className="work-chrome__name-letter"
+              initial={reduced ? false : { opacity: 0, y: '100%' }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={
+                reduced
+                  ? { duration: 0 }
+                  : {
+                      duration: 0.55,
+                      delay: 0.08 + i * 0.045,
+                      ease: [0.22, 1, 0.36, 1],
+                    }
+              }
+            >
+              {char}
+            </motion.span>
+          ))}
+        </span>
+        <motion.span
+          className="work-chrome__agency"
+          initial={reduced ? false : { opacity: 0, x: -8 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={
+            reduced ? { duration: 0 } : { duration: 0.6, delay: 0.45, ease: [0.22, 1, 0.36, 1] }
+          }
+        >
+          Agency
+        </motion.span>
       </span>
     </motion.span>
+  )
+}
+
+function WorkMobileBrandFooter() {
+  const letters = site.brand.split('')
+
+  return (
+    <div className="work-carousel__mobile-footer" aria-label={site.brand}>
+      <img className="work-carousel__mobile-footer-mark" src="/webrunner-icon.svg" alt="" width={22} height={22} decoding="async" />
+      <span className="work-carousel__mobile-footer-name">
+        {letters.map((char, i) => (
+          <span key={`footer-${char}-${i}`} className="work-chrome__name-letter">
+            {char}
+          </span>
+        ))}
+      </span>
+      <span className="work-carousel__mobile-footer-agency">Agency</span>
+    </div>
   )
 }
 
@@ -164,6 +223,7 @@ export function WorkCarousel() {
         autoplayDelay={4500}
         className="work-carousel__stage"
       />
+      <WorkMobileBrandFooter />
     </section>
   )
 }

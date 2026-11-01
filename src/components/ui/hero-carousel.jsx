@@ -86,45 +86,97 @@ export function HeroCarousel({
   const label = Math.max(9, Math.round(box.h * LABEL))
 
   const isCompact = box.w > 0 && box.w < 900
-  const stripTop =
-    box.w > 0 && box.w < 380
-      ? 0.64
-      : box.w > 0 && box.w < 640
-        ? 0.58
-        : isCompact
-          ? 0.54
-          : STRIP_TOP
+  const slide = items[index]
+  const hasOfferCta = Boolean(onContactClick || contactHref)
 
-  const cardAR = isCompact ? 0.78 : CARD_AR
-  const bottomReserve = Math.max(36, Math.round(box.h * 0.055))
-  const stripSpace =
-    box.h > 0 ? Math.max(0, box.h * (1 - stripTop) - bottomReserve) : 0
-  const cardLift = isCompact ? 8 : 4
+  const layout = React.useMemo(() => {
+    const lines = (slide?.title ?? 'Work\nPreview').split('\n')
+    const titleSize =
+      box.w <= 0
+        ? 24
+        : box.w < 380
+          ? Math.max(22, Math.round(box.w * 0.072))
+          : box.w < 640
+            ? Math.max(24, Math.round(box.h * 0.045))
+            : isCompact
+              ? Math.max(24, Math.round(box.h * TITLE * 0.85))
+              : Math.max(24, Math.round(box.h * TITLE))
 
-  let fullH = clamp(box.h * CARD_H, 96, 360)
-  if (isCompact && box.h > 0 && stripSpace > 0) {
-    const maxH = stripSpace * 0.96
-    const ratioH = box.h * (box.w < 380 ? 0.34 : 0.3)
-    const widthTarget = box.w * (box.w < 380 ? 0.72 : 0.6)
-    const widthH = widthTarget / cardAR
-    fullH = clamp(Math.max(ratioH, widthH, maxH * 0.88), 132, maxH)
-  }
+    const cardAR = isCompact ? 0.78 : CARD_AR
+    const bottomReserve = isCompact
+      ? Math.max(56, Math.round(box.h * 0.088))
+      : Math.max(36, Math.round(box.h * 0.055))
+    const carouselStripGap = isCompact ? 20 : 0
+    const cardLift = isCompact ? 0 : 4
 
-  const halfH = fullH / 2
-  const cardW = fullH * cardAR
-  const gap = Math.max(isCompact ? 8 : 4, Math.round(cardW * (isCompact ? GAP * 1.35 : GAP)))
-  const step = cardW + gap
+    let stripTop = STRIP_TOP
+    if (isCompact && box.h > 0) {
+      const categoryPadRem = box.w < 640 ? 4.15 + 3.95 + 1.65 : 4.6 + 3.85 + 1.35
+      const categoryPadPx = categoryPadRem * 16
+      const stackedCtAs = box.w < 640
+      const hasLive = Boolean(slide?.href)
+      const ctaCount = (hasLive ? 1 : 0) + (hasOfferCta ? 1 : 0)
+      const titleH = lines.length * titleSize * 0.92 + 8
+      const creditH = slide?.credit ? label * 1.45 + 6 : 0
+      const metaPad = stackedCtAs ? 28 : 22
+      const ctaH = stackedCtAs
+        ? ctaCount * 49 + Math.max(0, ctaCount - 1) * 10
+        : ctaCount * 46 + (ctaCount > 1 ? 10 : 0)
+      const factsH = slide?.meta?.length ? 34 : 0
+      const blockGaps = 16 * (2 + (factsH ? 1 : 0))
+      const headlineBottomPad = Math.max(14, Math.round(box.h * 0.02))
+      const contentPx = titleH + creditH + metaPad + ctaH + factsH + blockGaps
+      const requiredPx = categoryPadPx + contentPx + headlineBottomPad + carouselStripGap
+      stripTop = clamp(requiredPx / box.h, 0.58, 0.82)
+    } else if (isCompact) {
+      stripTop = box.w > 0 && box.w < 380 ? 0.66 : box.w > 0 && box.w < 640 ? 0.62 : 0.58
+    }
 
-  const titleSize =
-    box.w <= 0
-      ? 24
-      : box.w < 380
-        ? Math.max(22, Math.round(box.w * 0.072))
-        : box.w < 640
-          ? Math.max(24, Math.round(box.h * 0.045))
-          : isCompact
-            ? Math.max(24, Math.round(box.h * TITLE * 0.85))
-            : Math.max(24, Math.round(box.h * TITLE))
+    const stripSpace =
+      box.h > 0
+        ? Math.max(0, box.h * (1 - stripTop) - bottomReserve - carouselStripGap - cardLift)
+        : 0
+
+    let fullH = clamp(box.h * CARD_H, 96, 360)
+    if (isCompact && box.h > 0 && stripSpace > 0) {
+      const maxH = stripSpace * 0.82
+      const ratioH = box.h * (box.w < 380 ? 0.28 : 0.25)
+      const widthTarget = box.w * (box.w < 380 ? 0.64 : 0.54)
+      const widthH = widthTarget / cardAR
+      fullH = clamp(Math.max(ratioH, widthH), 120, maxH)
+    }
+
+    const halfH = fullH / 2
+    const cardW = fullH * cardAR
+    const gap = Math.max(isCompact ? 8 : 4, Math.round(cardW * (isCompact ? GAP * 1.35 : GAP)))
+    const step = cardW + gap
+
+    return {
+      lines,
+      titleSize,
+      stripTop,
+      fullH,
+      halfH,
+      cardW,
+      gap,
+      step,
+      cardLift,
+      carouselStripGap,
+    }
+  }, [box.h, box.w, hasOfferCta, index, isCompact, label, slide])
+
+  const {
+    lines,
+    titleSize,
+    stripTop,
+    fullH,
+    halfH,
+    cardW,
+    gap,
+    step,
+    cardLift,
+    carouselStripGap,
+  } = layout
 
   const xFor = React.useCallback(
     (i) => box.w / 2 - (i * step + cardW / 2),
@@ -186,10 +238,9 @@ export function HeroCarousel({
     return () => window.clearTimeout(id)
   }, [autoplay, autoplayDelay, dragging, go, index, items.length, last, paused])
 
-  const active = items[index]
+  const active = slide
   if (!active) return null
 
-  const lines = active.title.split('\n')
   const neonColors = [active.accent ?? '#E4CFAE', '#C9A87C']
 
   return (
@@ -254,60 +305,63 @@ export function HeroCarousel({
       />
 
       <div
-        className="work-chrome absolute inset-x-0 z-20 flex items-center justify-center"
+        className={cn(
+          'work-chrome absolute inset-x-0 z-20 flex items-center',
+          isCompact ? 'work-chrome--compact justify-between' : 'justify-center',
+        )}
         style={{
           top: Math.max(22, box.h * 0.028),
-          gap: `${Math.max(36, box.w * 0.08)}px`,
+          gap: isCompact ? undefined : `${Math.max(36, box.w * 0.08)}px`,
           paddingLeft: pad,
           paddingRight: pad,
         }}
       >
-        {onBack ? (
-          <button type="button" onClick={onBack} className="work-chrome__action">
-            <span aria-hidden>↖</span> Back
-          </button>
-        ) : (
-          <span className="work-chrome__spacer" aria-hidden />
-        )}
-        {brand ? <div className="work-chrome__brand-slot">{brand}</div> : null}
+        <div className="work-chrome__start flex min-w-0 items-center">
+          {onBack ? (
+            <button type="button" onClick={onBack} className="work-chrome__action">
+              <span aria-hidden>↖</span> Back
+            </button>
+          ) : null}
+          {brand ? <div className="work-chrome__brand-slot">{brand}</div> : null}
+        </div>
         {onMenu ? (
           <button
             type="button"
             onClick={onMenu}
-            className="work-chrome__action work-chrome__menu"
+            className="work-chrome__action work-chrome__menu shrink-0"
             aria-controls="landing-navigation"
             aria-haspopup="dialog"
           >
-            <span>{menuLabel}</span>
+            <span className="work-chrome__menu-label">{menuLabel}</span>
             <span className="work-chrome__menu-icon" aria-hidden>
               <span />
               <span />
             </span>
           </button>
         ) : (
-          <span className="work-chrome__spacer" aria-hidden />
+          <span className="work-chrome__spacer work-chrome__spacer--end" aria-hidden />
         )}
       </div>
 
       <div
         className={cn(
-          'work-carousel__headline absolute inset-x-0 top-0 z-10 flex min-h-0 flex-col',
-          isCompact ? 'justify-stretch' : 'justify-end',
+          'work-carousel__headline absolute inset-x-0 top-0 flex min-h-0 flex-col',
+          isCompact ? 'work-carousel__headline--compact z-20 justify-start' : 'z-10 justify-end',
         )}
         style={{
           height: `${stripTop * 100}%`,
           paddingLeft: pad,
           paddingRight: pad,
-          paddingBottom: isCompact ? Math.max(12, Math.round(box.h * 0.024)) : Math.round(box.h * 0.028),
+          paddingBottom: isCompact ? Math.max(14, Math.round(box.h * 0.02)) : Math.round(box.h * 0.028),
         }}
       >
         <div
           className={cn(
             'work-carousel__headline-row flex w-full min-w-0 flex-col items-stretch gap-3 min-[900px]:flex-row min-[900px]:flex-wrap min-[900px]:items-end min-[900px]:gap-x-[6vw] min-[900px]:gap-y-3',
-            isCompact && 'min-h-0 flex-1 gap-4',
+            isCompact && 'shrink-0 gap-4',
           )}
         >
-          {isCompact ? <div className="work-carousel__headline-spacer" aria-hidden /> : null}
+          <div className={cn('work-carousel__headline-content flex w-full flex-col', isCompact ? 'gap-4' : 'contents')}>
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.h2
               key={index}
@@ -427,16 +481,23 @@ export function HeroCarousel({
               ))}
             </div>
           ) : null}
+          </div>
         </div>
       </div>
 
       <div
-        className="work-carousel__strip absolute inset-x-0 z-10"
-        style={{ top: `${stripTop * 100}%`, height: fullH + cardLift }}
+        className={cn(
+          'work-carousel__strip absolute inset-x-0',
+          isCompact ? 'z-[8]' : 'z-10',
+        )}
+        style={{
+          top: `calc(${stripTop * 100}% + ${carouselStripGap}px)`,
+          height: fullH + cardLift,
+        }}
       >
         <motion.div
           className="work-carousel__track flex items-start"
-          style={{ gap, x, cursor: dragging ? 'grabbing' : 'grab', paddingTop: cardLift }}
+          style={{ gap, x, cursor: dragging ? 'grabbing' : 'grab', paddingTop: isCompact ? 0 : cardLift }}
           drag="x"
           dragMomentum={false}
           dragElastic={0.08}
@@ -470,12 +531,12 @@ export function HeroCarousel({
                 }}
                 animate={{
                   height: focused ? fullH : halfH,
-                  y: focused ? -cardLift : 0,
+                  y: focused && cardLift ? -cardLift : 0,
                   scale: focused ? 1 : 0.97,
                   opacity: focused ? 1 : 0.78,
                 }}
                 whileHover={
-                  reduced || dragging
+                  reduced || dragging || isCompact
                     ? undefined
                     : { scale: focused ? 1.015 : 0.99, y: focused ? -cardLift - 2 : -2 }
                 }
@@ -504,8 +565,12 @@ export function HeroCarousel({
       </div>
 
       <div
-        className="absolute z-10"
-        style={{ left: pad, bottom: Math.max(14, box.h * 0.022), width: box.w * RAIL }}
+        className="work-carousel__progress absolute z-10"
+        style={{
+          left: pad,
+          bottom: isCompact ? Math.max(52, box.h * 0.078) : Math.max(14, box.h * 0.022),
+          width: box.w * RAIL,
+        }}
       >
         <div
           className="flex justify-between tabular-nums opacity-80"
