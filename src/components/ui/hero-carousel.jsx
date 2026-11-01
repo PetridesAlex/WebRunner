@@ -304,9 +304,10 @@ export function HeroCarousel({
         <div
           className={cn(
             'work-carousel__headline-row flex w-full min-w-0 flex-col items-stretch gap-3 min-[900px]:flex-row min-[900px]:flex-wrap min-[900px]:items-end min-[900px]:gap-x-[6vw] min-[900px]:gap-y-3',
-            isCompact && 'min-h-0 flex-1 justify-end gap-4',
+            isCompact && 'min-h-0 flex-1 gap-4',
           )}
         >
+          {isCompact ? <div className="work-carousel__headline-spacer" aria-hidden /> : null}
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.h2
               key={index}
