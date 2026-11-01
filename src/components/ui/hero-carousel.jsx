@@ -82,13 +82,49 @@ export function HeroCarousel({
     return () => ro.disconnect()
   }, [])
 
-  const fullH = clamp(box.h * CARD_H, 96, 360)
-  const halfH = fullH / 2
-  const cardW = fullH * CARD_AR
-  const gap = Math.max(4, Math.round(cardW * GAP))
-  const step = cardW + gap
   const pad = Math.max(16, Math.round(box.w * PAD))
   const label = Math.max(9, Math.round(box.h * LABEL))
+
+  const isCompact = box.w > 0 && box.w < 900
+  const stripTop =
+    box.w > 0 && box.w < 380
+      ? 0.64
+      : box.w > 0 && box.w < 640
+        ? 0.58
+        : isCompact
+          ? 0.54
+          : STRIP_TOP
+
+  const cardAR = isCompact ? 0.78 : CARD_AR
+  const bottomReserve = Math.max(36, Math.round(box.h * 0.055))
+  const stripSpace =
+    box.h > 0 ? Math.max(0, box.h * (1 - stripTop) - bottomReserve) : 0
+  const cardLift = isCompact ? 8 : 4
+
+  let fullH = clamp(box.h * CARD_H, 96, 360)
+  if (isCompact && box.h > 0 && stripSpace > 0) {
+    const maxH = stripSpace * 0.96
+    const ratioH = box.h * (box.w < 380 ? 0.34 : 0.3)
+    const widthTarget = box.w * (box.w < 380 ? 0.72 : 0.6)
+    const widthH = widthTarget / cardAR
+    fullH = clamp(Math.max(ratioH, widthH, maxH * 0.88), 132, maxH)
+  }
+
+  const halfH = fullH / 2
+  const cardW = fullH * cardAR
+  const gap = Math.max(isCompact ? 8 : 4, Math.round(cardW * (isCompact ? GAP * 1.35 : GAP)))
+  const step = cardW + gap
+
+  const titleSize =
+    box.w <= 0
+      ? 24
+      : box.w < 380
+        ? Math.max(22, Math.round(box.w * 0.072))
+        : box.w < 640
+          ? Math.max(24, Math.round(box.h * 0.045))
+          : isCompact
+            ? Math.max(24, Math.round(box.h * TITLE * 0.85))
+            : Math.max(24, Math.round(box.h * TITLE))
 
   const xFor = React.useCallback(
     (i) => box.w / 2 - (i * step + cardW / 2),
@@ -100,6 +136,15 @@ export function HeroCarousel({
   const spring = reduced
     ? { duration: 0 }
     : { type: 'spring', stiffness: 260, damping: 34, mass: 0.9 }
+
+  const cardSpring = reduced
+    ? { duration: 0 }
+    : {
+        type: 'spring',
+        stiffness: isCompact ? 210 : 260,
+        damping: isCompact ? 26 : 34,
+        mass: 0.88,
+      }
 
   React.useEffect(() => {
     if (dragging) return undefined
@@ -245,24 +290,29 @@ export function HeroCarousel({
       </div>
 
       <div
-        className="work-carousel__headline absolute inset-x-0 top-0 z-10 flex flex-col justify-end"
+        className={cn(
+          'work-carousel__headline absolute inset-x-0 top-0 z-10 flex min-h-0 flex-col',
+          isCompact ? 'justify-stretch' : 'justify-end',
+        )}
         style={{
-          height: `${STRIP_TOP * 100}%`,
+          height: `${stripTop * 100}%`,
           paddingLeft: pad,
           paddingRight: pad,
-          paddingBottom: Math.round(box.h * 0.028),
+          paddingBottom: isCompact ? Math.max(12, Math.round(box.h * 0.024)) : Math.round(box.h * 0.028),
         }}
       >
-        <div className="flex w-full flex-wrap items-end gap-x-[6vw] gap-y-3">
+        <div
+          className={cn(
+            'work-carousel__headline-row flex w-full min-w-0 flex-col items-stretch gap-3 min-[900px]:flex-row min-[900px]:flex-wrap min-[900px]:items-end min-[900px]:gap-x-[6vw] min-[900px]:gap-y-3',
+            isCompact && 'min-h-0 flex-1 justify-end gap-4',
+          )}
+        >
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.h2
               key={index}
-              className="font-semibold leading-[0.88] tracking-[-0.03em]"
+              className="work-carousel__title min-w-0 max-w-full shrink-0 font-semibold leading-[0.88] tracking-[-0.03em]"
               style={{
-                fontSize: Math.max(
-                  box.w > 0 && box.w < 640 ? 28 : 24,
-                  Math.round(box.h * (box.w > 0 && box.w < 900 ? TITLE * 0.85 : TITLE)),
-                ),
+                fontSize: titleSize,
               }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -289,7 +339,7 @@ export function HeroCarousel({
 
           <motion.div
             key={`credit-${index}`}
-            className="work-chrome__meta flex flex-col gap-3"
+            className="work-chrome__meta flex min-w-0 w-full max-w-full shrink-0 flex-col gap-3 min-[900px]:w-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
@@ -311,6 +361,7 @@ export function HeroCarousel({
                   className="work-chrome__cta work-chrome__cta--ghost"
                   onClick={(e) => e.stopPropagation()}
                 >
+                  <span className="work-chrome__cta-shimmer" aria-hidden />
                   <span className="work-chrome__cta-label">View live</span>
                   <span className="work-chrome__cta-icon" aria-hidden>
                     ↗
@@ -327,6 +378,7 @@ export function HeroCarousel({
                       onContactClick()
                     }}
                   >
+                    <span className="work-chrome__cta-glow" aria-hidden />
                     <span className="work-chrome__cta-sheen" aria-hidden />
                     <span className="work-chrome__cta-label">{contactLabel}</span>
                     <span className="work-chrome__cta-icon" aria-hidden>
@@ -339,6 +391,7 @@ export function HeroCarousel({
                     className="work-chrome__cta work-chrome__cta--solid"
                     onClick={(e) => e.stopPropagation()}
                   >
+                    <span className="work-chrome__cta-glow" aria-hidden />
                     <span className="work-chrome__cta-sheen" aria-hidden />
                     <span className="work-chrome__cta-label">{contactLabel}</span>
                     <span className="work-chrome__cta-icon" aria-hidden>
@@ -352,13 +405,15 @@ export function HeroCarousel({
 
           {active.meta?.length ? (
             <div
-              className="work-carousel__facts ml-auto flex flex-wrap items-end"
-              style={{ gap: `${Math.max(16, box.w * 0.055)}px` }}
+              className="work-carousel__facts flex w-full min-w-0 max-w-full flex-wrap items-end min-[900px]:ml-auto min-[900px]:w-auto"
+              style={{
+                gap: isCompact ? '0.5rem 0.75rem' : `${Math.max(16, box.w * 0.055)}px`,
+              }}
             >
               {active.meta.map((fact, i) => (
                 <motion.span
                   key={`${index}-${fact}`}
-                  className="whitespace-nowrap uppercase tracking-[0.14em] opacity-80"
+                  className="work-carousel__fact uppercase tracking-[0.14em] opacity-80"
                   style={{ fontSize: label, fontFamily: 'var(--font-mono)' }}
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 0.8, y: 0 }}
@@ -375,12 +430,12 @@ export function HeroCarousel({
       </div>
 
       <div
-        className="absolute inset-x-0 z-10"
-        style={{ top: `${STRIP_TOP * 100}%`, height: fullH }}
+        className="work-carousel__strip absolute inset-x-0 z-10"
+        style={{ top: `${stripTop * 100}%`, height: fullH + cardLift }}
       >
         <motion.div
-          className="flex items-start"
-          style={{ gap, x, cursor: dragging ? 'grabbing' : 'grab' }}
+          className="work-carousel__track flex items-start"
+          style={{ gap, x, cursor: dragging ? 'grabbing' : 'grab', paddingTop: cardLift }}
           drag="x"
           dragMomentum={false}
           dragElastic={0.08}
@@ -392,33 +447,58 @@ export function HeroCarousel({
             go(Math.round((box.w / 2 - thrown - cardW / 2) / step))
           }}
         >
-          {items.map((item, i) => (
-            <motion.button
-              key={item.id ?? i}
-              type="button"
-              aria-label={item.title.replace(/\n/g, ' ')}
-              aria-current={i === index ? 'true' : undefined}
-              onClick={() => go(i)}
-              className="relative shrink-0 overflow-hidden rounded-none bg-white/5"
-              style={{ width: cardW }}
-              animate={{ height: i === index ? fullH : halfH }}
-              transition={spring}
-            >
-              <img
-                src={item.image}
-                alt=""
-                draggable={false}
-                className="h-full w-full object-cover"
-                style={{ objectPosition: '50% 26%' }}
-              />
-              <motion.span
-                aria-hidden
-                className="absolute inset-0 bg-black"
-                animate={{ opacity: i === index ? 0 : 0.12 }}
-                transition={spring}
-              />
-            </motion.button>
-          ))}
+          {items.map((item, i) => {
+            const focused = i === index
+            const accent = item.accent ?? '#c9a87c'
+
+            return (
+              <motion.button
+                key={item.id ?? i}
+                type="button"
+                aria-label={item.title.replace(/\n/g, ' ')}
+                aria-current={focused ? 'true' : undefined}
+                onClick={() => go(i)}
+                className={cn(
+                  'work-carousel__card relative shrink-0 overflow-hidden rounded-none bg-white/5',
+                  focused && 'work-carousel__card--active',
+                )}
+                style={{
+                  width: cardW,
+                  zIndex: focused ? 6 : 2,
+                  ['--card-accent']: accent,
+                }}
+                animate={{
+                  height: focused ? fullH : halfH,
+                  y: focused ? -cardLift : 0,
+                  scale: focused ? 1 : 0.97,
+                  opacity: focused ? 1 : 0.78,
+                }}
+                whileHover={
+                  reduced || dragging
+                    ? undefined
+                    : { scale: focused ? 1.015 : 0.99, y: focused ? -cardLift - 2 : -2 }
+                }
+                transition={cardSpring}
+              >
+                <motion.img
+                  src={item.image}
+                  alt=""
+                  draggable={false}
+                  className="work-carousel__card-media h-full w-full object-cover"
+                  style={{ objectPosition: '50% 26%' }}
+                  animate={{ scale: focused ? 1.08 : 1 }}
+                  transition={cardSpring}
+                />
+                <motion.span
+                  aria-hidden
+                  className="work-carousel__card-shade absolute inset-0 bg-black"
+                  animate={{ opacity: focused ? 0 : 0.08 }}
+                  transition={cardSpring}
+                />
+                <span aria-hidden className="work-carousel__card-frame pointer-events-none absolute inset-0" />
+              </motion.button>
+            )
+          })}
         </motion.div>
       </div>
 
